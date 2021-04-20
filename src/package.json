@@ -1,11 +1,12 @@
 {
-  "name": "azure-b2c-template",
+  "name": "gh-pages-next-test",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "build": "next build && next export",
+    "start": "next start",
+    "postbuild": "cp -a out/. ../build"
   },
   "dependencies": {
     "next": "10.1.3",
