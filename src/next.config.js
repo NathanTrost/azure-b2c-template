@@ -1,3 +1,5 @@
+const isProd = process.env.NODE_ENV === "production";
+
 module.exports = {
   distDir: "out",
   // Use the CDN in production and localhost for development.
