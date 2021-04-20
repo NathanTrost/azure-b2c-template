@@ -1,8 +1,7 @@
+const isProd = process.env.NODE_ENV === "production";
+
 module.exports = {
-  assetPrefix: "/resources",
-  rewrites() {
-    return [
-      { source: "/resources/_next/:path*", destination: "/_next/:path*" },
-    ];
-  },
+  assetPrefix: isProd
+    ? "https://cdn.statically.io/gh/NathanTrost/azure-b2c-template/gh-pages/"
+    : "",
 };
