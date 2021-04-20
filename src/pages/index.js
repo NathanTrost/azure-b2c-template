@@ -1,47 +1,100 @@
+import React, { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import setupPwdTogglers from "../utils/passwordToggle";
 
-export default function Home() {
+const Home = () => {
+  const [checkboxes, setCheckboxes] = useState();
+  const [isVisible, setIsVisible] = useState(false);
+  const pageRef = useRef();
+
+  useEffect(() => {
+    const handleCheckboxClick = (event) => setIsVisible((current) => !current);
+    // Not sure if we need multiple password fields, but this accounts for that
+    const pwdInputs = pageRef.current.querySelectorAll("input[type=password]");
+    const buildCheckboxes = Object.keys(pwdInputs).map((key) => {
+      const id = pwdInputs[key].id;
+
+      return {
+        id,
+        element: (
+          <div>
+            <label htmlFor={`${id}-toggler`}>Show Password</label>
+            <input
+              data-relative-input={id}
+              id={`${id}-toggler`}
+              onClick={handleCheckboxClick}
+              type="checkbox"
+            />
+          </div>
+        ),
+      };
+    });
+
+    setCheckboxes(buildCheckboxes);
+  }, []);
+
+  useEffect(() => {
+    const passwordElement = pageRef.current.querySelector(`input[id=password]`);
+    passwordElement.type = isVisible ? "text" : "password";
+  }, [isVisible]);
+
+  // useEffect(() => {
+  //   if (checkboxes) {
+  //     console.log({ checkboxes });
+  //     checkboxes.forEach((checkbox) => {
+  //       const passwordElement = pageRef.current.querySelector(
+  //         `input[id=${checkbox.id}]`
+  //       );
+  //     });
+  //   }
+  // }, [checkboxes]);
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={pageRef}>
       <Head>
         <title>Sign up or sign in</title>
-        <script type="text/javascript">{setupPwdTogglers()}</script>
       </Head>
 
-      <div class="container unified_container" role="presentation">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="panel panel-default">
-              <div class="panel-body">
+      <div className="container unified_container" role="presentation">
+        <div className="row">
+          <div className="col-lg-6">
+            <div className="panel panel-default">
+              <div className="panel-body">
                 <h1>The Puzzle Society</h1>
-
-                <div id="api" data-name="Unified">
+                <div className="test-checkboxes">
+                  {checkboxes && checkboxes.map((each) => each.element)}
+                </div>
+                <div id="api"></div>
+                {/* This entire area will be populated by Azure's form, it's here
+                simply for local development */}
+                <div
+                  id="api-copy"
+                  data-name="Unified"
+                  style={{ display: "none" }}
+                >
                   <form
                     id="localAccountForm"
-                    action="JavaScript:void(0);"
-                    class="localAccount"
+                    className="localAccount"
                     aria-label="Sign in with your email address"
                   >
-                    <div class="intro">
+                    <div className="intro">
                       <h2 aria-level="1">Sign in with your email address</h2>
                     </div>
                     <div
-                      class="error pageLevel"
+                      className="error pageLevel"
                       aria-hidden="true"
                       role="alert"
-                      style="display: none;"
+                      style={{ display: "none" }}
                     >
                       <p></p>
                     </div>
-                    <div class="entry">
-                      <div class="entry-item">
+                    <div className="entry">
+                      <div className="entry-item">
                         <div
-                          class="error itemLevel"
+                          className="error itemLevel"
                           aria-hidden="true"
                           role="alert"
-                          style="display: none;"
+                          style={{ display: "none" }}
                         >
                           <p></p>
                         </div>
@@ -51,17 +104,17 @@ export default function Home() {
                           name="Email Address"
                           title="Please enter a valid Email Address"
                           pattern="^[a-zA-Z0-9!#$%&amp;'+^_`{}~-]+(?:\.[a-zA-Z0-9!#$%&amp;'+^_`{}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"
-                          autofocus=""
+                          autoFocus=""
                           placeholder="Email Address"
                           aria-label="Email Address"
                         />
                       </div>
-                      <div class="entry-item">
-                        <div class="password-label"></div>
+                      <div className="entry-item">
+                        <div className="password-label"></div>
                         <div
-                          class="error itemLevel"
+                          className="error itemLevel"
                           aria-hidden="true"
-                          style="display: none;"
+                          style={{ display: "none" }}
                         >
                           <p role="alert"></p>
                         </div>
@@ -71,10 +124,10 @@ export default function Home() {
                           name="Password"
                           placeholder="Password"
                           aria-label="Password"
-                          autocomplete="current-password"
+                          autoComplete="current-password"
                           aria-required="true"
                         />
-                        <div class="forgot-password center-height">
+                        <div className="forgot-password center-height">
                           <a
                             id="forgotPassword"
                             href="/amub2c.onmicrosoft.com/B2C_1_test2/api/CombinedSigninAndSignup/unified?claimsexchange=ForgotPassword&amp;csrf_token=MFFLYnllUk9odmFWMzV6K0N0dmFIK0poeXJHTkNpdHNwaWhVeW1oTVd0MGxqY256MlFYWTdVNVlXYTdCMU5tbWJKMDdlckI3ZDQ3WnZNSDZDWXVNVXc9PTsyMDIxLTA0LTIwVDE3OjI4OjA1LjE1NDM3MzlaO1dyeTh1M05TaDZGY29WTUxEa0N6R1E9PTt7Ik9yY2hlc3RyYXRpb25TdGVwIjoxfQ==&amp;tx=StateProperties=eyJUSUQiOiI3YjRkZjQwZi0wMzk3LTQ4OTAtOTE3Mi1hMzE0OGFhZWUzMTIifQ&amp;p=B2C_1_test2"
@@ -83,18 +136,18 @@ export default function Home() {
                           </a>
                         </div>
                       </div>
-                      <div class="working"></div>
+                      <div className="working"></div>
 
-                      <div class="buttons">
+                      <div className="buttons">
                         <button id="next" type="submit" form="localAccountForm">
                           Sign in
                         </button>
                       </div>
                     </div>
-                    <div class="divider">
+                    <div className="divider">
                       <h2>OR</h2>
                     </div>
-                    <div class="create">
+                    <div className="create">
                       <p>
                         Don't have an account?
                         <a
@@ -120,4 +173,5 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+export default Home;
