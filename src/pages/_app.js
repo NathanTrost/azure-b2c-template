@@ -1,12 +1,5 @@
-import { ThemeProvider } from "../components/providers";
-import "../styles.css";
-
 function MyApp({ Component, pageProps }) {
-  return (
-    <ThemeProvider>
-      <Component {...pageProps} />
-    </ThemeProvider>
-  );
+  return <Component {...pageProps} />;
 }
 
 export default MyApp;
