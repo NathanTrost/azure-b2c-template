@@ -98,7 +98,7 @@ const Home = () => {
           
           setTimeout(() => {
             setupPwdTogglers();
-          }, 5000)}`,
+          }, 5000)`,
           }}
         />
       </Head>
