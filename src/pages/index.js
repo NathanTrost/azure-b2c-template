@@ -56,7 +56,7 @@ const Home = () => {
     >
       <Head>
         <title>Sign up or sign in</title>
-        {/* <script
+        <script
           dangerouslySetInnerHTML={{
             __html: `function makePwdToggler(pwd) {
             // Create show-password checkbox
@@ -98,9 +98,9 @@ const Home = () => {
           
           setTimeout(() => {
             setupPwdTogglers();
-          }, 1000)}`,
+          }, 5000)}`,
           }}
-        /> */}
+        />
       </Head>
 
       <div className="container unified_container" role="presentation">
