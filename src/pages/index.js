@@ -2,36 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
-const makePwdToggler = (pwd) => {
-  // Create show-password checkbox
-  const checkbox = document.createElement("input");
-  checkbox.setAttribute("type", "checkbox");
-  var id = pwd.id + "toggler";
-  checkbox.setAttribute("id", id);
 
-  const label = document.createElement("label");
-  label.setAttribute("for", id);
-  label.appendChild(document.createTextNode("show password"));
-
-  const div = document.createElement("div");
-  div.appendChild(checkbox);
-  div.appendChild(label);
-
-  // Add show-password checkbox under password input
-  pwd.insertAdjacentElement("afterend", div);
-
-  // Add toggle password callback
-  function toggle() {
-    if (pwd.type === "password") {
-      pwd.type = "text";
-    } else {
-      pwd.type = "password";
-    }
-  }
-  checkbox.onclick = toggle;
-  // For non-mouse usage
-  checkbox.onkeydown = toggle;
-};
 
 const Home = () => {
   // const [checkboxes, setCheckboxes] = useState();
@@ -81,11 +52,53 @@ const Home = () => {
   // }, [checkboxes]);
 
   return (
-    <div className={styles.container} ref={pageRef}>
+    <div
+      className={styles.container}
+      // ref={pageRef}
+    >
       <Head>
         <title>Sign up or sign in</title>
         <script>
-          {setTimeout(() => {
+          {
+          const makePwdToggler = (document, pwd) => {
+            // Create show-password checkbox
+            const checkbox = document.createElement("input");
+            checkbox.setAttribute("type", "checkbox");
+            var id = pwd.id + "toggler";
+            checkbox.setAttribute("id", id);
+          
+            const label = document.createElement("label");
+            label.setAttribute("for", id);
+            label.appendChild(document.createTextNode("show password"));
+          
+            const div = document.createElement("div");
+            div.appendChild(checkbox);
+            div.appendChild(label);
+          
+            // Add show-password checkbox under password input
+            pwd.insertAdjacentElement("afterend", div);
+          
+            // Add toggle password callback
+            function toggle() {
+              if (pwd.type === "password") {
+                pwd.type = "text";
+              } else {
+                pwd.type = "password";
+              }
+            }
+            checkbox.onclick = toggle;
+            // For non-mouse usage
+            checkbox.onkeydown = toggle;
+          };
+          
+          const setupPwdTogglers = (document) => {
+            const pwdInputs = document.querySelectorAll("input[type=password]");
+            for (let i = 0; i < pwdInputs.length; i++) {
+              makePwdToggler(pwdInputs[i]);
+            }
+          };
+          
+          setTimeout(() => {
             setupPwdTogglers();
           }, 1000)}
         </script>
