@@ -18,6 +18,7 @@
       rel="stylesheet"
       href="https://cdn.statically.io/gh/NathanTrost/azure-b2c-template/gh-pages/resources/custom.css"
     />
+   
     <script>
       function makePwdToggler(pwd) {
         // Create show-password checkbox
@@ -61,7 +62,15 @@
         setupPwdTogglers();
       // }, 1000);
     </script>
-    <script></script>
+    <script>
+      function showInDev(){
+        var apiDev = document.getElementById('api-dev');
+        if (window.location.href !== 'localhost:5000') 
+          apiDev.style.display = 'block'
+      }
+
+      setTimeout(() => {showInDev();}, 500);
+    </script>
   </head>
   <body>
     <div class="home_container">
@@ -70,8 +79,55 @@
           <div class="col-lg-6">
             <div class="panel panel-default">
               <div class="panel-body">
-                <h3>Sign in to your account</h1>
+                <h3 className="signin-header">Sign in to your account</h1>
                 <div id="api"></div>
+                <div id="api-dev" style="display: none;">
+                  <form id="localAccountForm" action="JavaScript:void(0);" class="localAccount" aria-label="Sign in with your email address">
+                    <div class="intro">
+                      <h2 aria-level="1">
+                        Sign in with your email address
+                      </h2>
+                    </div>
+                    <div class="error pageLevel" aria-hidden="true" role="alert" style="display: none;">
+                      <p></p>
+                    </div>
+                    <div class="entry">
+                      <div class="entry-item">
+                        <label for="email">
+                          Email Address
+                        </label>
+                        <div class="error itemLevel" aria-hidden="true" role="alert" style="display: none;">
+                          <p></p>
+                        </div>
+                        <input autocomplete="email" type="email" id="email" name="Email Address" title="Please enter a valid Email Address" pattern="^[a-zA-Z0-9!#$%&amp;'+^_`{}~-]+(?:\.[a-zA-Z0-9!#$%&amp;'+^_`{}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$" autofocus="" placeholder="Email Address" aria-label="Email Address">
+                      </div>
+                        <div class="entry-item">
+                          <div class="password-label">
+                            <label for="password">Password</label>
+                                <a id="forgotPassword" href="/amub2c.onmicrosoft.com/B2C_1_test2/api/CombinedSigninAndSignup/unified?claimsexchange=ForgotPassword&amp;csrf_token=QWhIZzdsellNNEsrelJ6TlcwS3dZMC9lT1ZnWFFMbFVwNVpEdUZFZGdwYmZHRkwzNXRnRkpWQlpBQ24vMml4UnFtRDUxUk9LdXZiK0lDeS9vZkRmWnc9PTsyMDIxLTA0LTIxVDE5OjQzOjUyLjAyNDQzWjt2OHpSWjJWbTVLeFZPRVQzVEJnYXJRPT07eyJPcmNoZXN0cmF0aW9uU3RlcCI6MX0=&amp;tx=StateProperties=eyJUSUQiOiJkMTMzOGRhNC03NmY0LTQ5ZGQtOGM3YS04ZGUwOWJhODA3YTkifQ&amp;p=B2C_1_test2">Forgot your password?</a>
+                                          </div>
+                          <div class="error itemLevel" aria-hidden="true" style="display: none;">
+                            <p role="alert"></p>
+                          </div>
+                          <input autocomplete="current-password"  type="password" id="password" name="Password" placeholder="Password" aria-label="Password" autocomplete="current-password" aria-required="true"><div><input type="checkbox" id="passwordtoggler"><label for="passwordtoggler">show password</label></div>
+                                      </div>
+                      <div class="working"></div>
+            
+            
+                      <div class="buttons">
+                        <button id="next" type="submit" form="localAccountForm">Sign in</button>
+                      </div>
+                    </div>
+                          <div class="divider">
+                            <h2>OR</h2>
+                          </div>
+                          <div class="create">
+                            <p>
+                              Don't have an account?<a id="createAccount" href="/amub2c.onmicrosoft.com/B2C_1_test2/api/CombinedSigninAndSignup/unified?local=signup&amp;csrf_token=QWhIZzdsellNNEsrelJ6TlcwS3dZMC9lT1ZnWFFMbFVwNVpEdUZFZGdwYmZHRkwzNXRnRkpWQlpBQ24vMml4UnFtRDUxUk9LdXZiK0lDeS9vZkRmWnc9PTsyMDIxLTA0LTIxVDE5OjQzOjUyLjAyNDQzWjt2OHpSWjJWbTVLeFZPRVQzVEJnYXJRPT07eyJPcmNoZXN0cmF0aW9uU3RlcCI6MX0=&amp;tx=StateProperties=eyJUSUQiOiJkMTMzOGRhNC03NmY0LTQ5ZGQtOGM3YS04ZGUwOWJhODA3YTkifQ&amp;p=B2C_1_test2">Sign up now</a>
+                            </p>
+                          </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
