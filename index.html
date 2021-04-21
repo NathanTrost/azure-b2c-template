@@ -130,6 +130,7 @@
     </div>
     <script>
       function makePwdToggler(pwd) {
+        debugger;
         // Create show-password checkbox
         var checkbox = document.createElement("input");
         checkbox.setAttribute("type", "checkbox");
@@ -167,9 +168,7 @@
         }
       }
 
-      (function () {
-        setupPwdTogglers();
-      });
+      setupPwdTogglers();
     </script>
   </body>
 </html>
