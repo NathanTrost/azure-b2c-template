@@ -58,18 +58,18 @@ const Home = () => {
         <title>Sign up or sign in</title>
         <script
           dangerouslySetInnerHTML={{
-            __html: `const makePwdToggler = (document, pwd) => {
+            __html: `function makePwdToggler(pwd) {
             // Create show-password checkbox
-            const checkbox = document.createElement("input");
+            var checkbox = document.createElement("input");
             checkbox.setAttribute("type", "checkbox");
             var id = pwd.id + "toggler";
             checkbox.setAttribute("id", id);
           
-            const label = document.createElement("label");
+            var label = document.createElement("label");
             label.setAttribute("for", id);
             label.appendChild(document.createTextNode("show password"));
           
-            const div = document.createElement("div");
+            var div = document.createElement("div");
             div.appendChild(checkbox);
             div.appendChild(label);
           
@@ -89,9 +89,9 @@ const Home = () => {
             checkbox.onkeydown = toggle;
           };
           
-          const setupPwdTogglers = (document) => {
-            const pwdInputs = document.querySelectorAll("input[type=password]");
-            for (let i = 0; i < pwdInputs.length; i++) {
+          function setupPwdTogglers() {
+            var pwdInputs = document.querySelectorAll("input[type=password]");
+            for (var i = 0; i < pwdInputs.length; i++) {
               makePwdToggler(pwdInputs[i]);
             }
           };
