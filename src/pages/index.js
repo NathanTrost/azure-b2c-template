@@ -108,7 +108,8 @@ const Home = () => {
           <div className="col-lg-6">
             <div className="panel panel-default">
               <div className="panel-body">
-                <h1>The Puzzle Society</h1>
+                <h1>The Puzzle Society </h1>
+                <div>inline-js branch</div>
                 {/* <div className="test-checkboxes">
                   {checkboxes && checkboxes.map((each) => each.element)}
                 </div> */}
