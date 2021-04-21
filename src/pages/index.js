@@ -3,40 +3,40 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
 const Home = () => {
-  const [checkboxes, setCheckboxes] = useState();
-  const [isVisible, setIsVisible] = useState(false);
-  const pageRef = useRef();
+  // const [checkboxes, setCheckboxes] = useState();
+  // const [isVisible, setIsVisible] = useState(false);
+  // const pageRef = useRef();
 
-  useEffect(() => {
-    const handleCheckboxClick = (event) => setIsVisible((current) => !current);
-    // Not sure if we need multiple password fields, but this accounts for that
-    const pwdInputs = pageRef.current.querySelectorAll("input[type=password]");
-    const buildCheckboxes = Object.keys(pwdInputs).map((key) => {
-      const id = pwdInputs[key].id;
+  // useEffect(() => {
+  //   const handleCheckboxClick = (event) => setIsVisible((current) => !current);
+  //   // Not sure if we need multiple password fields, but this accounts for that
+  //   const pwdInputs = pageRef.current.querySelectorAll("input[type=password]");
+  //   const buildCheckboxes = Object.keys(pwdInputs).map((key) => {
+  //     const id = pwdInputs[key].id;
 
-      return {
-        id,
-        element: (
-          <div>
-            <label htmlFor={`${id}-toggler`}>Show Password</label>
-            <input
-              data-relative-input={id}
-              id={`${id}-toggler`}
-              onClick={handleCheckboxClick}
-              type="checkbox"
-            />
-          </div>
-        ),
-      };
-    });
+  //     return {
+  //       id,
+  //       element: (
+  //         <div>
+  //           <label htmlFor={`${id}-toggler`}>Show Password</label>
+  //           <input
+  //             data-relative-input={id}
+  //             id={`${id}-toggler`}
+  //             onClick={handleCheckboxClick}
+  //             type="checkbox"
+  //           />
+  //         </div>
+  //       ),
+  //     };
+  //   });
 
-    setCheckboxes(buildCheckboxes);
-  }, []);
+  //   setCheckboxes(buildCheckboxes);
+  // }, []);
 
-  useEffect(() => {
-    const passwordElement = pageRef.current.querySelector(`input[id=password]`);
-    passwordElement.type = isVisible ? "text" : "password";
-  }, [isVisible]);
+  // useEffect(() => {
+  //   const passwordElement = pageRef.current.querySelector(`input[id=password]`);
+  //   passwordElement.type = isVisible ? "text" : "password";
+  // }, [isVisible]);
 
   // useEffect(() => {
   //   if (checkboxes) {
@@ -53,6 +53,49 @@ const Home = () => {
     <div className={styles.container} ref={pageRef}>
       <Head>
         <title>Sign up or sign in</title>
+        <script>
+      const makePwdToggler = (pwd) {
+        // Create show-password checkbox
+        var checkbox = document.createElement("input");
+        checkbox.setAttribute("type", "checkbox");
+        var id = pwd.id + "toggler";
+        checkbox.setAttribute("id", id);
+
+        var label = document.createElement("label");
+        label.setAttribute("for", id);
+        label.appendChild(document.createTextNode("show password"));
+
+        var div = document.createElement("div");
+        div.appendChild(checkbox);
+        div.appendChild(label);
+
+        // Add show-password checkbox under password input
+        pwd.insertAdjacentElement("afterend", div);
+
+        // Add toggle password callback
+        function toggle() {
+          if (pwd.type === "password") {
+            pwd.type = "text";
+          } else {
+            pwd.type = "password";
+          }
+        }
+        checkbox.onclick = toggle;
+        // For non-mouse usage
+        checkbox.onkeydown = toggle;
+      }
+
+      function setupPwdTogglers() {
+        var pwdInputs = document.querySelectorAll("input[type=password]");
+        for (var i = 0; i < pwdInputs.length; i++) {
+          makePwdToggler(pwdInputs[i]);
+        }
+      }
+
+      setTimeout(() => {
+        setupPwdTogglers();
+      }, 1000);
+    </script>
       </Head>
 
       <div className="container unified_container" role="presentation">
@@ -61,9 +104,9 @@ const Home = () => {
             <div className="panel panel-default">
               <div className="panel-body">
                 <h1>The Puzzle Society</h1>
-                <div className="test-checkboxes">
+                {/* <div className="test-checkboxes">
                   {checkboxes && checkboxes.map((each) => each.element)}
-                </div>
+                </div> */}
                 <div id="api"></div>
                 {/* This entire area will be populated by Azure's form, it's here
                 simply for local development */}
