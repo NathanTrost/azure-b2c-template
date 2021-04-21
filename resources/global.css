@@ -1,9 +1,7 @@
-.Home_container {
+.home_container {
   min-height: 100vh;
   padding: 0 0.5rem;
   flex-direction: column;
-}
-.Home_container {
   display: flex;
   justify-content: center;
   align-items: center;
