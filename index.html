@@ -65,7 +65,9 @@
     <script>
       function showInDev(){
         var apiDev = document.getElementById('api-dev');
-        if (window.location.href !== 'localhost:5000') 
+        console.log(window.location.href);
+        if (window.location.href === 'http://localhost:5000/' || 
+        window.location.href === "https://nathantrost.github.io/azure-b2c-template/") 
           apiDev.style.display = 'block'
       }
 
