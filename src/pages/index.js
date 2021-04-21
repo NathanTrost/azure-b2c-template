@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
-
-
 const Home = () => {
   // const [checkboxes, setCheckboxes] = useState();
   // const [isVisible, setIsVisible] = useState(false);
@@ -58,9 +56,9 @@ const Home = () => {
     >
       <Head>
         <title>Sign up or sign in</title>
-        <script>
-          {
-          const makePwdToggler = (document, pwd) => {
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `const makePwdToggler = (document, pwd) => {
             // Create show-password checkbox
             const checkbox = document.createElement("input");
             checkbox.setAttribute("type", "checkbox");
@@ -100,8 +98,9 @@ const Home = () => {
           
           setTimeout(() => {
             setupPwdTogglers();
-          }, 1000)}
-        </script>
+          }, 1000)}`,
+          }}
+        />
       </Head>
 
       <div className="container unified_container" role="presentation">
