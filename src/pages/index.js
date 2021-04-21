@@ -71,7 +71,7 @@ const Home = () => {
                 <div id="api"></div>
                 {/* This entire area will be populated by Azure's form, it's here
                 simply for local development */}
-                <div
+                {/* <div
                   id="api-copy"
                   data-name="Unified"
                   style={{ display: "none" }}
@@ -164,6 +164,7 @@ const Home = () => {
                     </div>
                   </form>
                 </div>
+              */}
               </div>
             </div>
           </div>
