@@ -74,17 +74,17 @@
 
 
         // Wrap email and password fields
-        var azureEmailInput = document.getElementById('email');
-        emailInputWrapper = document.createElement('div');
-        emailInputWrapper.setAttribute('id', 'email-input-wrapper');
-        emailInputWrapper.setAttribute('class', 'form-input-wrapper');
-        wrap(azureEmailInput, emailInputWrapper);
+        // var azureEmailInput = document.getElementById('email');
+        // emailInputWrapper = document.createElement('div');
+        // emailInputWrapper.setAttribute('id', 'email-input-wrapper');
+        // emailInputWrapper.setAttribute('class', 'form-input-wrapper');
+        // wrap(azureEmailInput, emailInputWrapper);
 
         var azurePasswordInput = document.getElementById('password');
-        passwordInputWrapper = document.createElement('div');
-        passwordInputWrapper.setAttribute('id', 'password-input-wrapper');
-        passwordInputWrapper.setAttribute('class', 'form-input-wrapper');
-        wrap(azurePasswordInput, passwordInputWrapper);
+        // passwordInputWrapper = document.createElement('div');
+        // passwordInputWrapper.setAttribute('id', 'password-input-wrapper');
+        // passwordInputWrapper.setAttribute('class', 'form-input-wrapper');
+        // wrap(azurePasswordInput, passwordInputWrapper);
 
         // Copy "create account" node and move it below "Sign in" text
         var azureCreate = document.querySelector('.create');
@@ -96,7 +96,8 @@
         var azureForgotPassword = document.getElementById('forgotPassword');
         var newForgotPassword = azureForgotPassword.cloneNode(true);
         newForgotPassword.setAttribute('id', 'amuForgotPassword');       
-        passwordInputWrapper.insertAdjacentElement("afterend", newForgotPassword);
+        // passwordInputWrapper.insertAdjacentElement("afterend", newForgotPassword);
+        azurePasswordInput.insertAdjacentElement("afterend", newForgotPassword);
   
 
         // Dom manipulation will break azure form, but we can hide these
