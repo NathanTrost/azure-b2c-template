@@ -18,15 +18,8 @@
       rel="stylesheet"
       href="https://cdn.statically.io/gh/NathanTrost/azure-b2c-template/gh-pages/resources/custom.css"
     />
-   <script>
-     function copyContent() {
-       var forgotPassword = document.getElementById('forgotPassword');
-       var passwordField = forgotPassword.cloneNode(true)
-       var passwordField = document.getElementById('password');
-       passwordField.insertAdjacentElement("afterend", passwordField);
-     }
-   </script>
-    <script>
+
+    <!-- <script>
        function buildToggleButton(pwd) {
         var id = `${pwd.id}-visibilityToggler`;
 
@@ -61,8 +54,18 @@
       }, 500);
 
 
-    </script>
+    </script> -->
     <script>
+      function copyForgetPassword() {
+        var forgotPassword = document.getElementById('forgotPassword');
+        forgotPassword.setAttribute('class', "hide");
+
+        var newForgotPassword = forgotPassword.cloneNode(true);
+        newForgotPassword.setAttribute('id', 'amuForgotPassword')
+        var passwordField = document.getElementById('password');
+        passwordField.insertAdjacentElement("afterend", newForgotPassword);
+      };
+
       // Show mock api form if in local or gh-pages environments
       function showInDev(){
         var apiDevForm = document.getElementById('api-dev');
@@ -71,7 +74,10 @@
           apiDevForm.style.display = 'block'
       }
 
-      setTimeout(() => {showInDev();}, 500);
+      setTimeout(() => { 
+        copyForgetPassword(); 
+        showInDev();
+      }, 500);
     </script>
   </head>
   <body>
