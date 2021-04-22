@@ -57,13 +57,20 @@
     </script>
     <script>
       function copyForgetPassword() {
-        var forgotPassword = document.getElementById('forgotPassword');
-        forgotPassword.setAttribute('class', "hide");
+        var create = document.getElementById('create');
+        var newCreate = create.cloneNode(true);
 
+        var intro = document.getElementById('intro')
+        intro.insertAdjacentElement('afterend', newCreate)
+
+        var forgotPassword = document.getElementById('forgotPassword');
         var newForgotPassword = forgotPassword.cloneNode(true);
-        newForgotPassword.setAttribute('id', 'amuForgotPassword')
+        newForgotPassword.setAttribute('id', 'amuForgotPassword');
         var passwordField = document.getElementById('password');
         passwordField.insertAdjacentElement("afterend", newForgotPassword);
+
+        forgotPassword.setAttribute('class', "hide");
+        create.setAttribute('class', "hide")
       };
 
       // Show mock api form if in local or gh-pages environments
