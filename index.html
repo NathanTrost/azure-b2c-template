@@ -25,9 +25,9 @@
     <script>
       var localBuildUrl = 'http://localhost:5000/'; // Use serve package
       var ghPagesUrl = "https://nathantrost.github.io/azure-b2c-template/"
-      var isDev = 
-        window.location.href === localBuildUrl || 
-        window.location.href === ghPagesUrl 
+      var isLiveAzure = 
+        window.location.href !== localBuildUrl || 
+        window.location.href !== ghPagesUrl 
           
        function buildToggleButton(pwd) {
         var id = `${pwd.id}-visibilityToggler`;
@@ -111,7 +111,7 @@
       // Show mock api form if in local or gh-pages environments
       function showInDev(){
         var apiDevForm = document.getElementById('api-dev');
-        if (!isDev) apiDevForm.remove();
+        if (isLiveAzure) apiDevForm.remove();
       }
 
       setTimeout(() => {
