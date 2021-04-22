@@ -20,35 +20,27 @@
     />
    
     <script>
+      function togglePasswordVisibility(pwd) {
+        pwd.type = pwd.type === 'password' ? 'text' : 'password'
+      }
+
       function makePwdToggler(pwd) {
-        // Create show-password checkbox
-        var checkbox = document.createElement("input");
-        checkbox.setAttribute("type", "checkbox");
-        var id = pwd.id + "toggler";
-        checkbox.setAttribute("id", id);
+        var id = `${pwd.id}-visibilityToggler`;
 
-        var label = document.createElement("label");
-        label.setAttribute("for", id);
-        label.appendChild(document.createTextNode("show password"));
+        var button = document.createElement("button");        
+        button.textContent = "Show";
+        button.setAttribute("type", "button");
+        button.setAttribute("id", id);  
 
-        var div = document.createElement("div");
-        div.appendChild(checkbox);
-        div.appendChild(label);
+        pwd.insertAdjacentElement("afterend", button);
 
-        // Add show-password checkbox under password input
-        pwd.insertAdjacentElement("afterend", div);
-
-        // Add toggle password callback
         function toggle() {
-          if (pwd.type === "password") {
-            pwd.type = "text";
-          } else {
-            pwd.type = "password";
-          }
+          pwd.type = pwd.type === 'password' ? 'text' : 'password'
         }
-        checkbox.onclick = toggle;
+
+        button.onclick = toggle;
         // For non-mouse usage
-        checkbox.onkeydown = toggle;
+        button.onkeydown = toggle;
       }
 
       function setupPwdTogglers() {
@@ -58,14 +50,16 @@
         }
       }
 
-      // setTimeout(() => {
+      setTimeout(() => {
+        // Replace this with on doc load function
         setupPwdTogglers();
-      // }, 1000);
+      }, 1000);
+
     </script>
     <script>
+      // Show mock api form if in local or gh-pages environments
       function showInDev(){
         var apiDev = document.getElementById('api-dev');
-        console.log(window.location.href);
         if (window.location.href === 'http://localhost:5000/' || 
         window.location.href === "https://nathantrost.github.io/azure-b2c-template/") 
           apiDev.style.display = 'block'
@@ -111,7 +105,8 @@
                           <div class="error itemLevel" aria-hidden="true" style="display: none;">
                             <p role="alert"></p>
                           </div>
-                          <input autocomplete="current-password"  type="password" id="password" name="Password" placeholder="Password" aria-label="Password" autocomplete="current-password" aria-required="true"><div><input type="checkbox" id="passwordtoggler"><label for="passwordtoggler">show password</label></div>
+                          <input autocomplete="current-password"  type="password" id="password" name="Password" placeholder="Password" aria-label="Password" autocomplete="current-password" aria-required="true">
+                          
                                       </div>
                       <div class="working"></div>
             
