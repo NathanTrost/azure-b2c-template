@@ -23,6 +23,17 @@
   
 
     <script>
+      var localBuildUrl = 'http://localhost:5000/'; // Use serve package
+      var ghPagesUrl = "https://nathantrost.github.io/azure-b2c-template/"
+      var isDev = 
+        window.location.href === localBuildUrl || 
+        window.location.href === ghPagesUrl 
+          
+
+        function getIdByEnv(id) {
+          return isDev ? `${id}-dev` : id;
+        }
+
        function buildToggleButton(pwd) {
         var id = `${pwd.id}-visibilityToggler`;
 
@@ -75,10 +86,10 @@
         intro.insertAdjacentElement("afterend", newCreate)
 
         // Copy forgot password and move directly under input
-        var forgotPassword = document.getElementById('forgotPassword');
+        var forgotPassword = document.getElementById(getIdByEnv('forgotPassword'));
         var newForgotPassword = forgotPassword.cloneNode(true);
         newForgotPassword.setAttribute('id', 'amuForgotPassword');
-        var passwordField = document.getElementById('password');
+        var passwordField = document.getElementById(getIdByEnv('password'));
         passwordField.insertAdjacentElement("afterend", newForgotPassword);
 
         // Dom manipulation will break azure form, but we can hide them
@@ -89,33 +100,25 @@
         create.setAttribute('class', 'hide')
       };
 
+      // Show mock api form if in local or gh-pages environments
+      function showInDev(){
+        var apiDevForm = document.getElementById('api-dev');
+        if (isDev) apiDevForm.style.display = 'block'
+      }
 
       setTimeout(() => {
+        showInDev();
         // Replace this with on doc load function
         makeFieldLabelsUniform()
         copyOriginalAzureElements(); 
         createPwdToggleButtons();
         // Make smooth CSS transition for api form elements
-        var azureForm = document.getElementById('api')
+        var azureForm = document.getElementById(getIdByEnv('api'))
         azureForm.style.display = 'block'
       }, 500);
 
 
 
-    </script>
-    <script>
-
-      // Show mock api form if in local or gh-pages environments
-      function showInDev(){
-        var apiDevForm = document.getElementById('api-dev');
-        if (window.location.href === 'http://localhost:5000/' || 
-        window.location.href === "https://nathantrost.github.io/azure-b2c-template/") 
-          apiDevForm.style.display = 'block'
-      }
-
-      setTimeout(() => { 
-        showInDev();
-      }, 500);
     </script>
   </head>
   <body>
@@ -163,7 +166,7 @@
             
             
                       <div class="buttons">
-                        <button id="next" type="submit" form="localAccountForm-dev">Sign in</button>
+                        <button id="next" type="submit-dev" form="localAccountForm-dev">Sign in</button>
                       </div>
                     </div>
                           <div class="divider">
