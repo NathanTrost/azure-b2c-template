@@ -50,6 +50,18 @@
       }
 
       function copyOriginalAzureElements() {
+
+        var emailLabel = document.querySelector("label[for=email]");
+        var emailWrapper = document.createElement('div')
+        emailWrapper.setAttribute('class', 'email-label');
+        function wrap(el, wrapper) {
+          el.parentNode.insertBefore(wrapper, el);
+          wrapper.appendChild(el);
+        }
+
+        wrap(emailLabel, emailWrapper)
+
+
         var create = document.querySelector('.create');
         var newCreate = create.cloneNode(true);
 
@@ -71,8 +83,9 @@
 
       setTimeout(() => {
         // Replace this with on doc load function
-        createPwdToggleButtons();
         copyOriginalAzureElements(); 
+        createPwdToggleButtons();
+        // Make smooth CSS transition for api form elements
         var azureForm = document.getElementById('api')
         azureForm.style.display = 'block'
       }, 500);
