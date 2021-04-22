@@ -20,11 +20,7 @@
     />
    
     <script>
-      function togglePasswordVisibility(pwd) {
-        pwd.type = pwd.type === 'password' ? 'text' : 'password'
-      }
-
-      function makePwdToggler(pwd) {
+       function buildToggleButton(pwd) {
         var id = `${pwd.id}-visibilityToggler`;
 
         var button = document.createElement("button");        
@@ -43,16 +39,16 @@
         button.onkeydown = toggle;
       }
 
-      function setupPwdTogglers() {
+      function createPwdToggleButtons() {
         var pwdInputs = document.querySelectorAll("input[type=password]");
         for (var i = 0; i < pwdInputs.length; i++) {
-          makePwdToggler(pwdInputs[i]);
+          buildToggleButton(pwdInputs[i]);
         }
       }
 
       setTimeout(() => {
         // Replace this with on doc load function
-        setupPwdTogglers();
+        createPwdToggleButtons();
       }, 1000);
 
     </script>
