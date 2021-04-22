@@ -51,6 +51,7 @@
 
       function copyOriginalAzureElements() {
 
+        // Wrap email label as azure does with password
         var emailLabel = document.querySelector("label[for=email]");
         var emailWrapper = document.createElement('div')
         emailWrapper.setAttribute('class', 'email-label');
@@ -58,15 +59,15 @@
           el.parentNode.insertBefore(wrapper, el);
           wrapper.appendChild(el);
         }
-
         wrap(emailLabel, emailWrapper)
 
 
+        // Copy create div and move under into text
         var create = document.querySelector('.create');
         var newCreate = create.cloneNode(true);
-
         var intro = document.querySelector('.intro')
         intro.insertAdjacentElement("afterend", newCreate)
+
 
         var forgotPassword = document.getElementById('forgotPassword');
         var newForgotPassword = forgotPassword.cloneNode(true);
@@ -77,6 +78,7 @@
         var divider = document.querySelector('.divider');
         divider.setAttribute('class', 'hide');
         forgotPassword.setAttribute('class', 'hide');
+        create.setAttribute('class', 'hide')
         create.setAttribute('class', 'hide')
       };
 
@@ -117,7 +119,8 @@
               <div class="panel-body">
                 <h3 className="signin-header">Sign in to your account</h1>
                 <div id="api" style="display: none;"></div>
-                <div id="api-dev" style="display: none;">
+
+                <!-- <div id="api-dev" style="display: none;">
                   <form id="localAccountForm" action="JavaScript:void(0);" class="localAccount" aria-label="Sign in with your email address">
                     <div class="intro">
                       <h2 aria-level="1">
@@ -164,7 +167,9 @@
                             </p>
                           </div>
                   </form>
+             
                 </div>
+              -->
               </div>
             </div>
           </div>
