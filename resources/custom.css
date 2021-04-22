@@ -7,6 +7,14 @@
   text-transform: capitalize;
 }
 
+.showPasswordButton {
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .hide {
   display: none;
 }

@@ -30,16 +30,17 @@
         button.textContent = "Show";
         button.setAttribute("type", "button");
         button.setAttribute("id", id);  
+        button.setAttribut('class', "showPasswordButton")
 
         pwd.insertAdjacentElement("afterend", button);
 
-        function toggle() {
+        function toggleVisibility() {
           pwd.type = pwd.type === 'password' ? 'text' : 'password'
         }
 
-        button.onclick = toggle;
+        button.onclick = toggleVisibility;
         // For non-mouse usage
-        button.onkeydown = toggle;
+        button.onkeydown = toggleVisibility;
       }
 
       function createPwdToggleButtons() {
@@ -69,7 +70,8 @@
         // Copy create div and move under intro text
         var create = document.querySelector('.create');
         var newCreate = create.cloneNode(true);
-        var intro = document.querySelector('.intro')
+        newCreate.textContent = "Create one";
+        var intro = document.querySelector('.intro');
         intro.insertAdjacentElement("afterend", newCreate)
 
         // Copy forgot password and move directly under input
