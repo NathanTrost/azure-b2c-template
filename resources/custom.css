@@ -4,7 +4,8 @@
 
 .form-label {
   text-align: left;
-  text-transform: capitalize;
+  text-transform: uppercase;
+  color: #b3b3b3;
 }
 
 .showPasswordButton {
@@ -17,4 +18,36 @@
 
 .hide {
   display: none;
+}
+
+.createAccountLink {
+  border-radius: 0.5rem;
+  display: inline-block;
+  font-size: 1em;
+  font-weight: 400;
+  height: inherit;
+  line-height: 1.3333333;
+  padding: 10px 16px;
+  text-align: center;
+  touch-action: manipulation;
+  user-select: none;
+  white-space: nowrap;
+  -moz-user-select: none;
+  -ms-touch-action: manipulation;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  width: auto;
+  cursor: pointer;
+  animation: 0.5s ease-out 0s 1 slideInFromRight;
+}
+
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(50%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
