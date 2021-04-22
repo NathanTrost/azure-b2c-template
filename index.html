@@ -61,10 +61,7 @@
         }
       }
 
-      function wrap(el, wrapper) {
-          el.parentNode.insertBefore(wrapper, el);
-          wrapper.appendChild(el);
-        }
+     
 
       function makeFieldLabelsUniform() {
         // Wrap email label as azure does with password
@@ -74,7 +71,10 @@
 
         var passwordLabelWrapper = document.querySelector(".password-label");
         passwordLabelWrapper.setAttribute('class', 'password-label form-label');
-        wrap(emailLabel, emailLabelWrapper)
+
+        emailLabel.parentNode.insertBefore(wrapper, el);
+        emailLabelWrapper.appendChild(el);
+     
       }
 
       function copyOriginalAzureElements() {
