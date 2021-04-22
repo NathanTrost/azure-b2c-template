@@ -65,10 +65,10 @@
       function copyOriginalAzureNodes() {
         // Wrap email label
         var azureEmailLabel = document.querySelector("label[for=email]");
-        azureEmailLabel.classList.add('form-label')
+        azureEmailLabel.setAttribute("class", 'form-label')
 
         var azurePasswordLabelWrapper = document.querySelector(".password-label");
-        azurePasswordLabelWrapper.setAttribute("class", 'form-label');
+        azurePasswordLabelWrapper.classList.add('form-label');
         var azurePasswordInput = document.getElementById('password');
 
 
