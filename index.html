@@ -65,22 +65,22 @@
       function copyOriginalAzureNodes() {
         // Wrap email label
         var azureEmailLabel = document.querySelector("label[for=email]");
-      var emailLabelWrapper = document.createElement('div');
-      emailLabelWrapper.setAttribute('class', 'email-label form-label');
-      wrap(azureEmailLabel, emailLabelWrapper);
+        var emailLabelWrapper = document.createElement('div');
+        emailLabelWrapper.setAttribute('class', 'email-label form-label');
+        wrap(azureEmailLabel, emailLabelWrapper);
 
-      var azurePasswordLabelWrapper = document.querySelector(".password-label");
-      azurePasswordLabelWrapper.classList.add('form-label');
+        var azurePasswordLabelWrapper = document.querySelector(".password-label");
+        azurePasswordLabelWrapper.classList.add('form-label');
 
 
         // Wrap email and password fields
-        azureEmailInput = document.getElementById('email');
+        var azureEmailInput = document.getElementById('email');
         emailInputWrapper = document.createElement('div');
         emailInputWrapper.setAttribute('id', 'email-input-wrapper');
         emailInputWrapper.setAttribute('class', 'form-input-wrapper');
         wrap(azureEmailInput, emailInputWrapper);
 
-        azurePasswordInput = document.getElementById('password');
+        var azurePasswordInput = document.getElementById('password');
         passwordInputWrapper = document.createElement('div');
         passwordInputWrapper.setAttribute('id', 'password-input-wrapper');
         passwordInputWrapper.setAttribute('class', 'form-input-wrapper');
@@ -97,6 +97,7 @@
         var newForgotPassword = azureForgotPassword.cloneNode(true);
         newForgotPassword.setAttribute('id', 'amuForgotPassword');       
         passwordInputWrapper.insertAdjacentElement("afterend", newForgotPassword);
+  
 
         // Dom manipulation will break azure form, but we can hide these
         var azureDivider = document.querySelector('.divider');
