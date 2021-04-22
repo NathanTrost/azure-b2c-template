@@ -49,6 +49,8 @@
       setTimeout(() => {
         // Replace this with on doc load function
         createPwdToggleButtons();
+        var azureForm = document.getElementById('api-dev')
+        azureForm.style.display = 'block'
       }, 1000);
 
     </script>
@@ -72,7 +74,7 @@
             <div class="panel panel-default">
               <div class="panel-body">
                 <h3 className="signin-header">Sign in to your account</h1>
-                <div id="api"></div>
+                <div id="api" style="display: none;"></div>
                 <div id="api-dev" style="display: none;">
                   <form id="localAccountForm" action="JavaScript:void(0);" class="localAccount" aria-label="Sign in with your email address">
                     <div class="intro">
