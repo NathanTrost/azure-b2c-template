@@ -761,7 +761,7 @@ html {
   .localAccount
   .entry
   .entry-item
-  .password-label {
+  .form-label {
   text-align: left;
 }
 .forgot-password {
