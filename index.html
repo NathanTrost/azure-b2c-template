@@ -29,11 +29,6 @@
         window.location.href === localBuildUrl || 
         window.location.href === ghPagesUrl 
           
-
-        function getIdByEnv(id) {
-          return isDev ? `${id}-dev` : id;
-        }
-
        function buildToggleButton(pwd) {
         var id = `${pwd.id}-visibilityToggler`;
 
@@ -63,7 +58,7 @@
 
      
 
-      function makeFieldLabelsUniform() {
+      function makeFieldMarkupUniform() {
         // Wrap email label as azure does with password
         var emailLabel = document.querySelector("label[for=email]");
         var emailLabelWrapper = document.createElement('div')
@@ -73,26 +68,31 @@
         passwordLabelWrapper.setAttribute('class', 'password-label form-label');
 
         emailLabel.parentNode.insertBefore(emailLabelWrapper, emailLabel);
-        emailLabelWrapper.appendChild(emailLabel);
-     
+        emailLabelWrapper.appendChild(emailLabel);   
+
+        emailInput = document.getElementById('email');
+        passwordInput = document.getElementById('password');
+        emailInputWrapper = document.createElement(div);
+        emailInputWrapper.setAttribute('id', 'email-input-wrapper');
+        emailInputWrapper.setAttribute('class', 'form-input-wrapper');
+        passwordInputWrapper = document.createElement(div);
+        emailInputWrapper.setAttribute('id', 'password-input-wrapper');
+        emailInputWrapper.setAttribute('class', 'form-input-wrapper');
       }
 
       function copyOriginalAzureElements() {
         // Copy create div and move under intro text
         var create = document.querySelector('.create');
         var newCreate = create.cloneNode(true);
-        // var createAccountLink = getElementById(getIdEnv('createAccount'));
-        // createAccountLink.textContent = "Create one";
-        // createAccountLink.setAttribute('class', 'createAccountLink');
 
         var intro = document.querySelector('.intro');
-        intro.insertAdjacentElement("afterend", newCreate)
+        intro.insertAdjacentElement("afterend", newCreate);
 
         // Copy forgot password and move directly under input
-        var forgotPassword = document.getElementById(getIdByEnv('forgotPassword'));
+        var forgotPassword = document.getElementById('forgotPassword');
         var newForgotPassword = forgotPassword.cloneNode(true);
         newForgotPassword.setAttribute('id', 'amuForgotPassword');
-        var passwordField = document.getElementById(getIdByEnv('password'));
+        var passwordField = document.getElementById('password-input-wrapper');
         passwordField.insertAdjacentElement("afterend", newForgotPassword);
 
         // Dom manipulation will break azure form, but we can hide them
@@ -104,8 +104,8 @@
       };
 
       function addAutoCompleteToEmailField() {
-        var emailForm = document.getElementById(getIdByEnv('email'))
-        emailForm.setAttribute('autocomplete', 'email')
+        var emailForm = document.getElementById('email');
+        emailForm.setAttribute('autocomplete', 'email');
       }
 
       // Show mock api form if in local or gh-pages environments
@@ -118,12 +118,12 @@
         showInDev();
         addAutoCompleteToEmailField();
         // Replace this with on doc load function
-        makeFieldLabelsUniform()
+        makeFieldMarkupUniform()
         copyOriginalAzureElements(); 
         createPwdToggleButtons();
         // Make smooth CSS transition for api form elements
-        var azureForm = document.getElementById(getIdByEnv('api'))
-        azureForm.style.display = 'block'
+        var azureForm = document.getElementById('api');
+        azureForm.style.display = 'block';
       }, 2000);
 
 
