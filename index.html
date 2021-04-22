@@ -81,9 +81,9 @@
         // Copy create div and move under intro text
         var create = document.querySelector('.create');
         var newCreate = create.cloneNode(true);
-        var createAccountLink = getElementById(getIdEnv('createAccount'))
+        // var createAccountLink = getElementById(getIdEnv('createAccount'));
         // createAccountLink.textContent = "Create one";
-        createAccountLink.setAttribute('class', 'createAccountLink');
+        // createAccountLink.setAttribute('class', 'createAccountLink');
 
         var intro = document.querySelector('.intro');
         intro.insertAdjacentElement("afterend", newCreate)
