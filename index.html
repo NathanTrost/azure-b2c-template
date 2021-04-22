@@ -47,11 +47,11 @@
       }
 
       function copyOriginalAzureElements() {
-        var create = document.getElementById('create');
+        var create = document.querySelector('.create');
         var newCreate = create.cloneNode(true);
 
-        var intro = document.getElementById('intro')
-        intro.insertAdjacentElement('afterend', newCreate)
+        var intro = document.querySelector('.intro')
+        intro.insertAdjacentElement("afterend", newCreate)
 
         var forgotPassword = document.getElementById('forgotPassword');
         var newForgotPassword = forgotPassword.cloneNode(true);
