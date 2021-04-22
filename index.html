@@ -101,6 +101,11 @@
         create.setAttribute('class', 'hide')
       };
 
+      function addAutoCompleteToEmailField() {
+        var emailForm = document.getElementById(getIdByEnv('email'))
+        emailForm.setAttribute('autocomplete', 'email')
+      }
+
       // Show mock api form if in local or gh-pages environments
       function showInDev(){
         var apiDevForm = document.getElementById('api-dev');
@@ -109,6 +114,7 @@
 
       setTimeout(() => {
         showInDev();
+        addAutoCompleteToEmailField();
         // Replace this with on doc load function
         makeFieldLabelsUniform()
         copyOriginalAzureElements(); 
@@ -167,7 +173,7 @@
             
             
                       <div class="buttons">
-                        <button id="next" type="submit-dev" form="localAccountForm-dev">Sign in</button>
+                        <button id="next-dev" type="submit" form="localAccountForm-dev">Sign in</button>
                       </div>
                     </div>
                           <div class="divider">
