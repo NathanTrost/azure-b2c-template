@@ -18,7 +18,14 @@
       rel="stylesheet"
       href="https://cdn.statically.io/gh/NathanTrost/azure-b2c-template/gh-pages/resources/custom.css"
     />
-   
+   <script>
+     function copyContent() {
+       var forgotPassword = document.getElementById('forgotPassword');
+       var passwordField = forgotPassword.cloneNode(true)
+       var passwordField = document.getElementById('password');
+       passwordField.insertAdjacentElement("afterend", passwordField);
+     }
+   </script>
     <script>
        function buildToggleButton(pwd) {
         var id = `${pwd.id}-visibilityToggler`;
