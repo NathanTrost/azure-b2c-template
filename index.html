@@ -64,27 +64,13 @@
  
       function copyOriginalAzureNodes() {
         // Wrap email label
-        // var azureEmailLabel = document.querySelector("label[for=email]");
-        // var emailLabelWrapper = document.createElement('div');
-        // emailLabelWrapper.setAttribute('class', 'email-label form-label');
-        // wrap(azureEmailLabel, emailLabelWrapper);
+        var azureEmailLabel = document.querySelector("label[for=email]");
+        azureEmailLabel.classList.add('form-label')
 
         var azurePasswordLabelWrapper = document.querySelector(".password-label");
-        azurePasswordLabelWrapper.classList.add('form-label');
-
-
-        // Wrap email and password fields
-        // var azureEmailInput = document.getElementById('email');
-        // emailInputWrapper = document.createElement('div');
-        // emailInputWrapper.setAttribute('id', 'email-input-wrapper');
-        // emailInputWrapper.setAttribute('class', 'form-input-wrapper');
-        // wrap(azureEmailInput, emailInputWrapper);
-
+        azurePasswordLabelWrapper.setAttribute("class", 'form-label');
         var azurePasswordInput = document.getElementById('password');
-        // passwordInputWrapper = document.createElement('div');
-        // passwordInputWrapper.setAttribute('id', 'password-input-wrapper');
-        // passwordInputWrapper.setAttribute('class', 'form-input-wrapper');
-        // wrap(azurePasswordInput, passwordInputWrapper);
+
 
         // Copy "create account" node and move it below "Sign in" text
         var azureCreate = document.querySelector('.create');
