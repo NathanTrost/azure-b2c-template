@@ -24,7 +24,7 @@
 
     <script>
       var localBuildUrl = 'http://localhost:5000/'; // Use serve package
-      var ghPagesUrl = "https://nathantrost.github.io/azure-b2c-template/"
+      var ghPagesUrl = "https://nathantrost.github.io/azure-b2c-template/"; // Local gh page
       var isLiveAzure = 
         !(window.location.href === localBuildUrl || 
         window.location.href === ghPagesUrl); 
@@ -56,51 +56,52 @@
         }
       }
 
-     
+    function wrap(el, wrapper) {
+        el.parentNode.insertBefore(wrapper, el);
+        wrapper.appendChild(el);
+      }
 
-      function makeFieldMarkupUniform() {
-        // Wrap email label as azure does with password
-        var emailLabel = document.querySelector("label[for=email]");
-        var emailLabelWrapper = document.createElement('div')
-        emailLabelWrapper.setAttribute('class', 'email-label form-label');
+ 
+      function copyOriginalAzureNodes() {
+        // Wrap email and password labels
+        var azureEmailLabel = document.querySelector("label[for=email]");
+      var emailLabelWrapper = document.createElement('div');
+      emailLabelWrapper.setAttribute('class', 'email-label form-label');
 
-        var passwordLabelWrapper = document.querySelector(".password-label");
-        passwordLabelWrapper.setAttribute('class', 'password-label form-label');
+      var azurePasswordLabelWrapper = document.querySelector(".password-label");
+      azurePasswordLabelWrapper.setAttribute('class', 'password-label form-label');
+      wrap(azureEmailLabel, emailLabelWrapper);
 
-        emailLabel.parentNode.insertBefore(emailLabelWrapper, emailLabel);
-        emailLabelWrapper.appendChild(emailLabel);   
-
-        emailInput = document.getElementById('email');
-        passwordInput = document.getElementById('password');
+        // Wrap email and password fields
+        azureEmailInput = document.getElementById('email');
         emailInputWrapper = document.createElement('div');
         emailInputWrapper.setAttribute('id', 'email-input-wrapper');
         emailInputWrapper.setAttribute('class', 'form-input-wrapper');
+        wrap(azureEmailInput, emailInputWrapper);
+
+        azurePasswordInput = document.getElementById('password');
         passwordInputWrapper = document.createElement('div');
-        emailInputWrapper.setAttribute('id', 'password-input-wrapper');
-        emailInputWrapper.setAttribute('class', 'form-input-wrapper');
-      }
+        passwordInputWrapper.setAttribute('id', 'password-input-wrapper');
+        passwordInputWrapper.setAttribute('class', 'form-input-wrapper');
+        wrap(azurePasswordInput, passwordInputWrapper);
 
-      function copyOriginalAzureElements() {
-        // Copy create div and move under intro text
-        var create = document.querySelector('.create');
-        var newCreate = create.cloneNode(true);
+        // Copy "create account" node and move it below "Sign in" text
+        var azureCreate = document.querySelector('.create');
+        var newCreate = azureCreate.cloneNode(true);
+        var azureIntro = document.querySelector('.intro');
+        azureIntro.insertAdjacentElement("afterend", newCreate);
 
-        var intro = document.querySelector('.intro');
-        intro.insertAdjacentElement("afterend", newCreate);
+        // Copy "forgot password" link and move directly under our created password-input-wrapper
+        var azureForgotPassword = document.getElementById('forgotPassword');
+        var newForgotPassword = azureForgotPassword.cloneNode(true);
+        newForgotPassword.setAttribute('id', 'amuForgotPassword');       
+        passwordInputWrapper.insertAdjacentElement("afterend", newForgotPassword);
 
-        // Copy forgot password and move directly under input
-        var forgotPassword = document.getElementById('forgotPassword');
-        var newForgotPassword = forgotPassword.cloneNode(true);
-        newForgotPassword.setAttribute('id', 'amuForgotPassword');
-        var passwordField = document.getElementById('password-input-wrapper');
-        passwordField.insertAdjacentElement("afterend", newForgotPassword);
-
-        // Dom manipulation will break azure form, but we can hide them
-        var divider = document.querySelector('.divider');
-        divider.setAttribute('class', 'hide');
-        forgotPassword.setAttribute('class', 'hide');
-        create.setAttribute('class', 'hide')
-        create.setAttribute('class', 'hide')
+        // Dom manipulation will break azure form, but we can hide these
+        var azureDivider = document.querySelector('.divider');
+        azureDivider.setAttribute('class', 'hide');
+        azureForgotPassword.setAttribute('class', 'hide');
+        azureCreate.setAttribute('class', 'hide');
       };
 
       function addAutoCompleteToEmailField() {
@@ -110,23 +111,20 @@
 
       // Show mock api form if in local or gh-pages environments
       function showInDev(){
-        var apiDevForm = document.getElementById('api-dev');
-        if (isLiveAzure) apiDevForm.remove();
+        var apiDevForm = document.getElementById('api');
+        if (isLiveAzure) apiDevForm.innerHTML = ""
       }
+
 
       setTimeout(() => {
         showInDev();
-        addAutoCompleteToEmailField();
-        // Replace this with on doc load function
-        makeFieldMarkupUniform()
-        copyOriginalAzureElements(); 
+        copyOriginalAzureNodes();
+        addAutoCompleteToEmailField();  
         createPwdToggleButtons();
         // Make smooth CSS transition for api form elements
-        var azureForm = document.getElementById('api');
+        var azureForm =  document.getElementById('api');
         azureForm.style.display = 'block';
       }, 500);
-
-
 
     </script>
   </head>
@@ -138,10 +136,8 @@
             <div class="panel panel-default">
               <div class="panel-body">
                 <h3 className="signin-header">Sign in to your account</h1>
-                <div id="api" style="display: none;"></div>
-
-                <div id="api-dev">
-                 <div id="api" >
+                
+                 <div id="api" style="display: none;">
                   <form id="localAccountForm" action="JavaScript:void(0);" class="localAccount" aria-label="Sign in with your email address">
                     <div class="intro">
                       <h2 aria-level="1">
