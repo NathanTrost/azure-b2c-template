@@ -46,17 +46,7 @@
         }
       }
 
-      setTimeout(() => {
-        // Replace this with on doc load function
-        createPwdToggleButtons();
-        var azureForm = document.getElementById('api')
-        azureForm.style.display = 'block'
-      }, 500);
-
-
-    </script>
-    <script>
-      function copyForgetPassword() {
+      function copyOriginalAzureElements() {
         var create = document.getElementById('create');
         var newCreate = create.cloneNode(true);
 
@@ -73,6 +63,20 @@
         create.setAttribute('class', "hide")
       };
 
+
+      setTimeout(() => {
+        // Replace this with on doc load function
+        createPwdToggleButtons();
+        copyOriginalAzureElements(); 
+        var azureForm = document.getElementById('api')
+        azureForm.style.display = 'block'
+      }, 500);
+
+
+
+    </script>
+    <script>
+
       // Show mock api form if in local or gh-pages environments
       function showInDev(){
         var apiDevForm = document.getElementById('api-dev');
@@ -82,7 +86,6 @@
       }
 
       setTimeout(() => { 
-        copyForgetPassword(); 
         showInDev();
       }, 500);
     </script>
