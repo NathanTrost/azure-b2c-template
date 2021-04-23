@@ -84,7 +84,15 @@
         emailForm.setAttribute('autocomplete', 'email');
       }
 
+      // Show mock api form if in local or gh-pages environments
+      function showInDev(){
+        var apiDevForm = document.querySelector('#api.mock');
+        if (isLiveAzure) apiDevForm.remove();
+      }
+
+
       setTimeout(() => {
+        showInDev();
         copyOriginalAzureNodes();
         addAutoCompleteToEmailField();  
         createPwdToggleButtons();
@@ -104,7 +112,7 @@
               <div class="panel-body">
                 <h3 className="signin-header">Sign in to your account</h1>
                 
-                 <div id="api" style="display: none;">
+                 <div id="api" className="mock" style="display: none;">
                   <form id="localAccountForm" action="JavaScript:void(0);" class="localAccount" aria-label="Sign in with your email address">
                     <div class="intro">
                       <h2 aria-level="1">
@@ -152,7 +160,11 @@
                           </div>
                   </form>
              
+                
+                
                 </div>
+              
+                <div id="api" style="display: none;"></div>
               </div>
               
              
