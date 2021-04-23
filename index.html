@@ -25,14 +25,14 @@
     <script>
       // Show mock form if in local or gh-pages environments,
       // This is copied from basic azure form
-      function handleDevMockContent(){
-        var localBuildUrl = 'http://localhost:5000/'; // Use serve package
-        var ghPagesUrl = "https://nathantrost.github.io/azure-b2c-template/"; // Local gh page
-        var isLiveAzure = 
+      const handleDevMockContent = () => {
+        const localBuildUrl = 'http://localhost:5000/'; // Use serve package
+        const ghPagesUrl = "https://nathantrost.github.io/azure-b2c-template/"; // Local gh page
+        const isLiveAzure = 
         !(window.location.href === localBuildUrl || 
         window.location.href === ghPagesUrl); 
 
-        var apiDevForm = document.getElementById('api-dev');
+        const apiDevForm = document.getElementById('api-dev');
         if (isLiveAzure) {
           apiDevForm.remove()
         } else {
