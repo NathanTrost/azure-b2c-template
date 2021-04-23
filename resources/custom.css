@@ -4,7 +4,6 @@
 
 .form-label {
   text-align: left;
-  text-transform: uppercase;
   color: #b3b3b3;
 }
 
@@ -21,6 +20,7 @@
 }
 
 .link {
+  color: #24b1fb;
   display: inline-block;
   font-size: 1em;
   font-weight: 400;

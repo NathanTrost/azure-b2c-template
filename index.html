@@ -35,7 +35,8 @@
         const passwordId = envId("password");
 
       // Show mock form if in local or gh-pages environments,
-      // This is copied from basic azure form
+      // This is a copy from basic azure form, with all id's appended with '-dev'
+      // We instantly remove this node if we're not in development environment
       const handleDevMockContent = () => {
         const apiDevForm = document.getElementById('api-dev');
         return (isLiveAzure) ? apiDevForm.remove() : apiDevForm.style.display = 'block';
