@@ -50,11 +50,6 @@
           type: 'button',
           textContent: "Shot"
         });        
-        // button.textContent = "Show";
-        // button.setAttribute("type", "button");
-        // button.setAttribute("id", id);  
-        // button.setAttribute('class', "showPasswordButton")
-
         passwordInput.insertAdjacentElement("afterend", button);
 
         const toggleVisibility = () => 
@@ -82,8 +77,12 @@
         azureLabels.forEach((label) => {
           if (label.parentElement.className === 'entry-item') {
             labelWrapper = document.createElement('div');
-            labelWrapper.setAttribute('id', `${label.htmlFor}-label-wrapper`);
-            labelWrapper.setAttribute('className', `label-wrapper-${label.htmlFor} form-label`);
+            Object.assign(labelWrapper, {
+              id: `${label.htmlFor}-label-wrapper`,
+              className: `label-wrapper-${label.htmlFor} form-label`
+            })
+            // labelWrapper.setAttribute('id', `${label.htmlFor}-label-wrapper`);
+            // labelWrapper.setAttribute('className', `label-wrapper-${label.htmlFor} form-label`);
             wrap(label, labelWrapper)
           } else {
             label.parentElement.classList.add('form-label')
@@ -94,16 +93,25 @@
         const azureInputs = document.querySelectorAll(".entry-item input");
         azureInputs.forEach((input) => {
           const inputWrapper = document.createElement('div');
-          inputWrapper.setAttribute('id', `${input.type}-form-wrapper`);
-          inputWrapper.setAttribute('className', `form-wrapper-${input.type} form-wrapper`);
+          Object.assign(inputWrapper, {
+            id: `${input.type}-form-wrapper`,
+            className: `form-wrapper-${input.type} form-wrapper`
+          });
+          // inputWrapper.setAttribute('id', `${input.type}-form-wrapper`);
+          // inputWrapper.setAttribute('className', `form-wrapper-${input.type} form-wrapper`);
           wrap(input, inputWrapper)
         });
 
 
         const azureSignInMessage = document.querySelector(".intro h2");
-        azureSignInMessage.setAttribute('id', 'signInMessage');
-        azureSignInMessage.setAttribute('class', 'signInMessage');
-        azureSignInMessage.textContent = "Sign in to your account";
+        Object.assign(azureSignInMessage, {
+          id: 'signInMessage',
+          className: 'signInMessage',
+          textContent: 'Sign in to your account'
+        })
+        // azureSignInMessage.setAttribute('id', 'signInMessage');
+        // azureSignInMessage.setAttribute('class', 'signInMessage');
+        // azureSignInMessage.textContent = "Sign in to your account";
 
         // Copy "create account" node and move it below "Sign in" text
         const azureCreate = document.querySelector('.create');
