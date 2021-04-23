@@ -26,7 +26,6 @@
       // Show mock form if in local or gh-pages environments,
       // This is copied from basic azure form
       const handleDevMockContent = () => {
-        debugger;
         const localBuildUrl = 'http://localhost:5000/'; // Use serve package
         const ghPagesUrl = "https://nathantrost.github.io/azure-b2c-template/"; // Local gh page
         const isLiveAzure = 
@@ -41,10 +40,10 @@
         };
       }
           
-       function buildToggleButton(passwordInput) {
-        var id = `${passwordInput.id}-visibilityToggler`;
+       const buildToggleButton = (passwordInput) => {
+        const id = `${passwordInput.id}-visibilityToggler`;
 
-        var button = document.createElement("button");        
+        const button = document.createElement("button");        
         button.textContent = "Show";
         button.setAttribute("type", "button");
         button.setAttribute("id", id);  
@@ -52,30 +51,28 @@
 
         passwordInput.insertAdjacentElement("afterend", button);
 
-        function toggleVisibility() {
-          passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password'
-        }
+        const toggleVisibility = () => 
+          passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+      
 
         button.onclick = toggleVisibility;
         // For non-mouse usage
         button.onkeydown = toggleVisibility;
       }
 
-      function createPwdToggleButtons() {
-        var passwordInputs = document.querySelectorAll("input[type=password]");
-        for (var i = 0; i < passwordInputs.length; i++) {
-          buildToggleButton(passwordInputs[i]);
-        }
+      const createPwdToggleButtons() {
+        const passwordInputs = document.querySelectorAll("input[type=password]");
+        passwordInputs.forEach((input) => buildToggleButton(input));
       }
  
-      function wrap(el, wrapper) {
+      const wrap = (el, wrapper) => {
         el.parentNode.insertBefore(wrapper, el);
         wrapper.appendChild(el);
       }
 
-      function copyOriginalAzureNodes() {
+      const copyOriginalAzureNodes() {
         // Wrap labels & make them uniform
-        var azureLabels = document.querySelectorAll('.entry-item label');
+        const azureLabels = document.querySelectorAll('.entry-item label');
         azureLabels.forEach((label) => {
           if (label.parentElement.className === 'entry-item') {
             labelWrapper = document.createElement('div');
@@ -88,9 +85,9 @@
        });
 
         // Wrap inputs
-        var azureInputs = document.querySelectorAll(".entry-item input");
+        const azureInputs = document.querySelectorAll(".entry-item input");
         azureInputs.forEach((input) => {
-          var inputWrapper = document.createElement('div');
+          const inputWrapper = document.createElement('div');
           inputWrapper.setAttribute('id', `${input.type}-form-wrapper`);
           inputWrapper.setAttribute('className', `form-wrapper-${input.type} form-wrapper`);
           wrap(input, inputWrapper)
@@ -98,25 +95,25 @@
 
 
         // Copy "create account" node and move it below "Sign in" text
-        var azureCreate = document.querySelector('.create');
-        var newCreate = azureCreate.cloneNode(true);
-        var azureIntro = document.querySelector('.intro');
+        const azureCreate = document.querySelector('.create');
+        const newCreate = azureCreate.cloneNode(true);
+        const azureIntro = document.querySelector('.intro');
         azureIntro.insertAdjacentElement("afterend", newCreate);
 
-        var azureCreateLink = document.getElementById('createAccount');
+        const azureCreateLink = document.getElementById('createAccount');
         azureCreateLink.setAttribute('class', 'createAccountLink');
         azureCreateLink.textContent = "Create one.";
 
         // Copy "forgot password" link and move directly under our created password-input-wrapper
-        var azureForgotPassword = document.getElementById('forgotPassword');
-        var newForgotPassword = azureForgotPassword.cloneNode(true);
+        const azureForgotPassword = document.getElementById('forgotPassword');
+        const newForgotPassword = azureForgotPassword.cloneNode(true);
         newForgotPassword.setAttribute('id', 'amuForgotPassword');  
 
-        var azurePasswordInput = document.getElementById('password');
+        const azurePasswordInput = document.getElementById('password');
         azurePasswordInput.parentElement.insertAdjacentElement("afterend", newForgotPassword); 
 
         // Dom manipulation will break azure form, but we can hide these
-        var azureDivider = document.querySelector('.divider');
+        const azureDivider = document.querySelector('.divider');
         azureDivider.setAttribute('class', 'hide');
         azureForgotPassword.setAttribute('class', 'hide');
         azureCreate.setAttribute('class', 'hide');
