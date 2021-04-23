@@ -39,6 +39,19 @@
   width: auto;
   cursor: pointer;
   animation: 0.5s ease-out 0s 1 slideInFromRight;
+  text-decoration: none;
+}
+
+.createAccountLink:before {
+  content: "(";
+  color: black;
+  padding-right: 2px;
+}
+
+.createAccountLink:after {
+  content: ")";
+  color: black;
+  padding-left: 2px;
 }
 
 @keyframes slideInFromRight {
