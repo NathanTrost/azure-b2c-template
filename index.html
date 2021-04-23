@@ -108,9 +108,10 @@
         const azurePasswordInput = document.getElementById('password');
         azurePasswordInput.parentElement.insertAdjacentElement("afterend", azureForgotPassword); 
 
-        // Dom manipulation will break azure form, but we can hide these
+        
         const azureDivider = document.querySelector('.divider');
-        azureDivider.setAttribute('class', 'hide');
+        // azureDivider.setAttribute('class', 'hide');
+        azureDivider.remove();
       };
 
 
