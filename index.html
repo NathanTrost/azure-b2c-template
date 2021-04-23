@@ -63,14 +63,12 @@
 
  
       function copyOriginalAzureNodes() {
-
-        // var azurePasswordLabelWrapper = document.querySelector(".password-label");
-        // azurePasswordLabelWrapper.setAttribute("class", 'form-label');
         var azurePasswordInput = document.getElementById('password');
 
 
         // Copy "create account" node and move it below "Sign in" text
         var azureCreate = document.querySelector('.create');
+        debugger;
         var newCreate = azureCreate.cloneNode(true);
         var azureIntro = document.querySelector('.intro');
         azureIntro.insertAdjacentElement("afterend", newCreate);
