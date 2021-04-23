@@ -754,16 +754,7 @@ html {
   #password {
   margin-bottom: 20px;
 }
-.unified_container
-  .row
-  .panel-default
-  #api
-  .localAccount
-  .entry
-  .entry-item
-  .form-label {
-  text-align: left;
-}
+
 .forgot-password {
   text-align: left;
 }
