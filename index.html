@@ -99,36 +99,35 @@
         });
 
 
-        const azureSignInMessage = document.querySelector(".intro h2");
-        Object.assign(azureSignInMessage, {
-          id: 'signInMessage',
-          className: 'signInMessage',
-          textContent: 'Sign in to your account'
-        })
-        // Copy "create account" node and move it below "Sign in" text
-        const azureCreate = document.querySelector('.create');
-        const copiedCreate = azureCreate.cloneNode(true);
-        const azureIntro = document.querySelector('.intro');
-        azureIntro.insertAdjacentElement("afterend", copiedCreate);
-        azureCreate.remove();
+        // const azureSignInMessage = document.querySelector(".intro h2");
+        // Object.assign(azureSignInMessage, {
+        //   id: 'signInMessage',
+        //   className: 'signInMessage',
+        //   textContent: 'Sign in to your account'
+        // })
+        // // Copy "create account" node and move it below "Sign in" text
+        // const azureCreate = document.querySelector('.create');
+        // const copiedCreate = azureCreate.cloneNode(true);
+        // const azureIntro = document.querySelector('.intro');
+        // azureIntro.insertAdjacentElement("afterend", copiedCreate);
+        // azureCreate.remove();
 
         // const azureCreateLink = document.getElementById('createAccount');
         // const azureHref = azureCreateLink.href;
         // azureCreateLink.setAttribute('class', 'createAccountLink');
-        
         // azureCreateLink.textContent = "Create";
 
 
-        // Copy "forgot password" link and move directly under our created password-input-wrapper
-        const azureForgotPassword = document.getElementById('forgotPassword');
-        const azurePasswordInput = document.getElementById('password');
-        const copiedForgotPassword = azureForgotPassword.cloneNode(true);
-        azurePasswordInput.parentElement.insertAdjacentElement("afterend", copiedForgotPassword); 
-        azureForgotPassword.remove();
+        // // Copy "forgot password" link and move directly under our created password-input-wrapper
+        // const azureForgotPassword = document.getElementById('forgotPassword');
+        // const azurePasswordInput = document.getElementById('password');
+        // const copiedForgotPassword = azureForgotPassword.cloneNode(true);
+        // azurePasswordInput.parentElement.insertAdjacentElement("afterend", copiedForgotPassword); 
+        // azureForgotPassword.remove();
 
-        // Remove "or" divider, we could also just hide this.
-        const azureDivider = document.querySelector('.divider');
-        azureDivider.remove();
+        // // Remove "or" divider, we could also just hide this.
+        // const azureDivider = document.querySelector('.divider');
+        // azureDivider.remove();
       };
 
       // Copied from https://gist.github.com/jwilson8767/db379026efcbd932f64382db4b02853e
