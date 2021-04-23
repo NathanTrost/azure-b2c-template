@@ -41,10 +41,7 @@
         const apiDevForm = document.getElementById('api-dev');
         if (isLiveAzure) {
           apiDevForm.remove()
-        } 
-        // else {
-        //   apiDevForm.setAttribute("id", 'api');
-        // };
+        }
       }
           
        const buildToggleButton = (passwordInput) => {
@@ -120,7 +117,6 @@
         azureCreate.remove();
 
         const azureCreateLink = document.getElementById('createAccount');
-        const azureHref = azureCreateLink.href;
         azureCreateLink.setAttribute('class', 'createAccountLink');
         azureCreateLink.textContent = "Create";
 
@@ -179,7 +175,7 @@
               <div class="panel-body">
                 <h3 className="signin-header">Sign in to your account</h1>
                 
-                <div id="api-dev" style="display: none;">
+                <div id="api-dev">
             
                   <form id="localAccountForm-dev" action="JavaScript:void(0);" class="localAccount" aria-label="Sign in with your email address">
                     <div class="intro">
