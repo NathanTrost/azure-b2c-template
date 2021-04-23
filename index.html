@@ -47,7 +47,7 @@
         const button = document.createElement("button");
         Object.assign(button, {
           id,
-          className: "showPasswordButton",
+          className: "showPasswordButton link",
           type: 'button',
           textContent: "Show"
         });        
@@ -114,16 +114,13 @@
         azureCreate.remove();
 
         const azureCreateLink = document.getElementById(createAccountId);
-        azureCreateLink.setAttribute('class', 'createAccountLink');
-        azureCreateLink.textContent = "Create";
+        Object.assign(azureCreateLink, {
+          className: 'createAccountLink link',
+          textContent: "Create"
+        });
 
-
-        // Copy "forgot password" link and move directly under our created password-input-wrapper
         const azureForgotPassword = document.getElementById(forgotPasswordId);
-        const azurePasswordInput = document.getElementById(passwordId);
-        const copiedForgotPassword = azureForgotPassword.cloneNode(true);
-        azurePasswordInput.parentElement.insertAdjacentElement("afterend", copiedForgotPassword); 
-        azureForgotPassword.remove();
+        azureForgotPassword.setAttribute("forgotPassword link");
 
         // Remove "or" divider, we could also just hide this.
         const azureDivider = document.querySelector('.divider');
