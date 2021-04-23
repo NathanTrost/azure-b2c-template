@@ -121,8 +121,7 @@
 
         // Remove "or" divider, we could also just hide this.
         const azureDivider = document.querySelector('.divider');
-        azureDivider.setAttribute('class', 'hide')
-        // azureDivider.remove();
+        azureDivider.remove();
       };
 
 
@@ -138,8 +137,9 @@
         }, 500);
       }
 
+      handleDevMockContent();
       waitForContentToLoad(() => {
-        handleDevMockContent();
+
         copyOriginalAzureNodes();
         createPwdToggleButtons();
         // Make smooth CSS transition for api form elements
