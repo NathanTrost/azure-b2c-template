@@ -102,10 +102,13 @@
       };
 
       function wrapInputs() {
-        var inputs = document.querySelectorAll("entry-item input");
-        debugger;
-        inputs.forEach(() => {
-          console.log(inputs.type);
+        var azureInputs = document.querySelectorAll(".entry-item input");
+        azureInputs.forEach((input) => {
+          var { type } = input;
+          var inputWrapper = document.createElement('div');
+          inputWrapper.setAttribute('id', `${type}-form-wrapper`);
+          inputWrapper.setAttribute('className', `form-wrapper-${type} form-wrapper`);
+          wrap(input, inputWrapper)
         });
        }
 
