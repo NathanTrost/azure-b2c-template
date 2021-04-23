@@ -38,6 +38,7 @@
         } else {
           apiDevForm.setAttribute("id", 'api');
         };
+        debugger;
       }
           
        const buildToggleButton = (passwordInput) => {
@@ -126,21 +127,22 @@
 
 
       const waitForContentToLoad = (doStuff) => {
-        if(window.jQuery) {
-         return $(document).ready(() => {
-            doStuff();
-          })
+        if (window.jQuery) {
+         $(document).ready(() => doStuff());
+        } else {
+          setTimeout(() => doStuff(), 500);
         }
 
-        return setTimeout(() => {
-          doStuff();
-        }, 500);
       }
 
-      handleDevMockContent();
+
+
       waitForContentToLoad(() => {
 
+        handleDevMockContent();
+
         copyOriginalAzureNodes();
+
         createPwdToggleButtons();
         // Make smooth CSS transition for api form elements
         const azureForm =  document.getElementById('api');
@@ -163,6 +165,7 @@
                 <h3 className="signin-header">Sign in to your account</h1>
                 
                  <div id="api-dev" style="display: none;">
+            
                   <form id="localAccountForm" action="JavaScript:void(0);" class="localAccount" aria-label="Sign in with your email address">
                     <div class="intro">
                       <h2 aria-level="1">
@@ -210,7 +213,6 @@
                           </div>
                   </form>
              
-                
                 
                 </div>
               
