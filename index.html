@@ -23,14 +23,25 @@
   
 
     <script>
-      var localBuildUrl = 'http://localhost:5000/'; // Use serve package
-      var ghPagesUrl = "https://nathantrost.github.io/azure-b2c-template/"; // Local gh page
-      var isLiveAzure = 
+      // Show mock form if in local or gh-pages environments,
+      // This is copied from basic azure form
+      function handleDevMockContent(){
+        var localBuildUrl = 'http://localhost:5000/'; // Use serve package
+        var ghPagesUrl = "https://nathantrost.github.io/azure-b2c-template/"; // Local gh page
+        var isLiveAzure = 
         !(window.location.href === localBuildUrl || 
         window.location.href === ghPagesUrl); 
+
+        var apiDevForm = document.getElementById('api-dev');
+        if (isLiveAzure) {
+          apiDevForm.remove()
+        } else {
+          apiDevForm.setAttribute("id", 'api');
+        };
+      }
           
-       function buildToggleButton(pwd) {
-        var id = `${pwd.id}-visibilityToggler`;
+       function buildToggleButton(passwordInput) {
+        var id = `${passwordInput.id}-visibilityToggler`;
 
         var button = document.createElement("button");        
         button.textContent = "Show";
@@ -38,10 +49,10 @@
         button.setAttribute("id", id);  
         button.setAttribute('class', "showPasswordButton")
 
-        pwd.insertAdjacentElement("afterend", button);
+        passwordInput.insertAdjacentElement("afterend", button);
 
         function toggleVisibility() {
-          pwd.type = pwd.type === 'password' ? 'text' : 'password'
+          passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password'
         }
 
         button.onclick = toggleVisibility;
@@ -50,9 +61,9 @@
       }
 
       function createPwdToggleButtons() {
-        var pwdInputs = document.querySelectorAll("input[type=password]");
-        for (var i = 0; i < pwdInputs.length; i++) {
-          buildToggleButton(pwdInputs[i]);
+        var passwordInputs = document.querySelectorAll("input[type=password]");
+        for (var i = 0; i < passwordInputs.length; i++) {
+          buildToggleButton(passwordInputs[i]);
         }
       }
  
@@ -62,17 +73,27 @@
       }
 
       function copyOriginalAzureNodes() {
-        // Wrap email label as azure does with password
-        var azureEmailLabel = document.querySelector("label[for=email]");
-        var emailLabelWrapper = document.createElement('div')
-        emailLabelWrapper.setAttribute('class', 'email-label form-label');
-        wrap(azureEmailLabel, emailLabelWrapper);
+        // Wrap labels & make them uniform
+        var azureLabels = document.querySelectorAll('.entry-item label');
+        azureLabels.forEach((label) => {
+          if (label.parentElement.className === 'entry-item') {
+            labelWrapper = document.createElement('div');
+            labelWrapper.setAttribute('id', `${label.htmlFor}-label-wrapper`);
+            labelWrapper.setAttribute('className', `label-wrapper-${label.htmlFor} form-label`);
+            wrap(label, labelWrapper)
+          } else {
+            label.parentElement.classList.add('form-label')
+          }
+       });
 
-        var azureEmailForm = document.getElementById('email');
-        azureEmailForm.setAttribute('autocomplete', 'email');
-
-        var azurePasswordLabelWrapper = document.querySelector(".password-label");
-        azurePasswordLabelWrapper.setAttribute('class', 'password-label form-label');
+        // Wrap inputs
+        var azureInputs = document.querySelectorAll(".entry-item input");
+        azureInputs.forEach((input) => {
+          var inputWrapper = document.createElement('div');
+          inputWrapper.setAttribute('id', `${input.type}-form-wrapper`);
+          inputWrapper.setAttribute('className', `form-wrapper-${input.type} form-wrapper`);
+          wrap(input, inputWrapper)
+        });
 
 
         // Copy "create account" node and move it below "Sign in" text
@@ -91,8 +112,7 @@
         newForgotPassword.setAttribute('id', 'amuForgotPassword');  
 
         var azurePasswordInput = document.getElementById('password');
-        azurePasswordInput.insertAdjacentElement("afterend", newForgotPassword);
-  
+        azurePasswordInput.parentElement.insertAdjacentElement("afterend", newForgotPassword); 
 
         // Dom manipulation will break azure form, but we can hide these
         var azureDivider = document.querySelector('.divider');
@@ -101,33 +121,12 @@
         azureCreate.setAttribute('class', 'hide');
       };
 
-      function wrapInputs() {
-        var azureInputs = document.querySelectorAll(".entry-item input");
-        azureInputs.forEach((input) => {
-          var { type } = input;
-          var inputWrapper = document.createElement('div');
-          inputWrapper.setAttribute('id', `${type}-form-wrapper`);
-          inputWrapper.setAttribute('className', `form-wrapper-${type} form-wrapper`);
-          wrap(input, inputWrapper)
-        });
-       }
-
-      // Show mock api form if in local or gh-pages environments
-      function handleDevMockContent(){
-        var apiDevForm = document.getElementById('api-dev');
-        if (isLiveAzure) {
-          apiDevForm.remove()
-        } else {
-          apiDevForm.setAttribute("id", 'api');
-        };
-      }
 
 
       setTimeout(() => {
         handleDevMockContent();
         copyOriginalAzureNodes();
         createPwdToggleButtons();
-        wrapInputs();
         // Make smooth CSS transition for api form elements
         var azureForm =  document.getElementById('api');
         azureForm.style.display = 'block';
