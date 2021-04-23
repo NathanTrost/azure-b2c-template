@@ -56,7 +56,25 @@
         }
       }
  
+      function wrap(el, wrapper) {
+        el.parentNode.insertBefore(wrapper, el);
+        wrapper.appendChild(el);
+      }
+
       function copyOriginalAzureNodes() {
+        // Wrap email label as azure does with password
+        var azureEmailLabel = document.querySelector("label[for=email]");
+        var emailLabelWrapper = document.createElement('div')
+        emailLabelWrapper.setAttribute('class', 'email-label form-label');
+        wrap(azureEmailLabel, emailLabelWrapper);
+
+        var azureEmailForm = document.getElementById('email');
+        azureEmailForm.setAttribute('autocomplete', 'email');
+
+        var azurePasswordLabelWrapper = document.querySelector(".password-label");
+        passwordLabelWrapper.setAttribute('class', 'password-label form-label');
+
+
         // Copy "create account" node and move it below "Sign in" text
         var azureCreate = document.querySelector('.create');
         var newCreate = azureCreate.cloneNode(true);
@@ -79,10 +97,7 @@
         azureCreate.setAttribute('class', 'hide');
       };
 
-      function addAutoCompleteToEmailField() {
-        var emailForm = document.getElementById('email');
-        emailForm.setAttribute('autocomplete', 'email');
-      }
+
 
       // Show mock api form if in local or gh-pages environments
       function showInDev(){
@@ -98,7 +113,6 @@
       setTimeout(() => {
         showInDev();
         copyOriginalAzureNodes();
-        addAutoCompleteToEmailField();  
         createPwdToggleButtons();
         // Make smooth CSS transition for api form elements
         var azureForm =  document.getElementById('api');
