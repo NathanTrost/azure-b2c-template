@@ -40,6 +40,8 @@
         const apiDevForm = document.getElementById('api-dev');
         if (isLiveAzure) {
           apiDevForm.remove()
+        } else {
+          apiDevForm.style.display = 'block';
         }
       }
           
@@ -174,7 +176,7 @@
               <div class="panel-body">
                 <h3 className="signin-header">Sign in to your account</h1>
                 
-                <div id="api-dev">
+                <div id="api-dev" style="display:none;">
             
                   <form id="localAccountForm-dev" action="JavaScript:void(0);" class="localAccount" aria-label="Sign in with your email address">
                     <div class="intro">
