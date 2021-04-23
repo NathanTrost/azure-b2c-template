@@ -38,11 +38,7 @@
       // This is copied from basic azure form
       const handleDevMockContent = () => {
         const apiDevForm = document.getElementById('api-dev');
-        if (isLiveAzure) {
-          apiDevForm.remove()
-        } else {
-          apiDevForm.style.display = 'block';
-        }
+        return (isLiveAzure) ? apiDevForm.remove() : apiDevForm.style.display = 'block';
       }
           
        const buildToggleButton = (passwordInput) => {
