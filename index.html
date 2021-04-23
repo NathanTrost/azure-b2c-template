@@ -96,7 +96,6 @@
 
         // Copy "create account" node and move it below "Sign in" text
         const azureCreate = document.querySelector('.create');
-        // const newCreate = azureCreate.cloneNode(true);
         const azureIntro = document.querySelector('.intro');
         azureIntro.insertAdjacentElement("afterend", azureCreate);
 
@@ -106,17 +105,12 @@
 
         // Copy "forgot password" link and move directly under our created password-input-wrapper
         const azureForgotPassword = document.getElementById('forgotPassword');
-        const newForgotPassword = azureForgotPassword.cloneNode(true);
-        newForgotPassword.setAttribute('id', 'amuForgotPassword');  
-
         const azurePasswordInput = document.getElementById('password');
-        azurePasswordInput.parentElement.insertAdjacentElement("afterend", newForgotPassword); 
+        azurePasswordInput.parentElement.insertAdjacentElement("afterend", azureForgotPassword); 
 
         // Dom manipulation will break azure form, but we can hide these
         const azureDivider = document.querySelector('.divider');
         azureDivider.setAttribute('class', 'hide');
-        azureForgotPassword.setAttribute('class', 'hide');
-        azureCreate.setAttribute('class', 'hide');
       };
 
 
