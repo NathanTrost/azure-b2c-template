@@ -84,15 +84,7 @@
         emailForm.setAttribute('autocomplete', 'email');
       }
 
-      // Show mock api form if in local or gh-pages environments
-      function showInDev(){
-        var apiDevForm = document.getElementById('api');
-        if (isLiveAzure) apiDevForm.innerHTML = ""
-      }
-
-
       setTimeout(() => {
-        // showInDev();
         copyOriginalAzureNodes();
         addAutoCompleteToEmailField();  
         createPwdToggleButtons();
