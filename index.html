@@ -126,7 +126,7 @@
 
 
       const waitForContentToLoad = (doStuff) => {
-        if(!window.jQuery) {
+        if(window.jQuery) {
          return $(document).ready(() => {
             doStuff();
           })
