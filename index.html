@@ -31,9 +31,8 @@
 
         const envId = (name) => isLiveAzure ? name : `${name}-dev`;
         const createAccountId = envId("createAccount");
-        const forgotPassword = envId("createAccount");
-        const passwordId = envId("createAccount");
-        const apiId = envId("createAccount");
+        const forgotPassword = envId("forgotPassword");
+        const passwordId = envId("password");
 
       // Show mock form if in local or gh-pages environments,
       // This is copied from basic azure form
@@ -116,14 +115,14 @@
         azureIntro.insertAdjacentElement("afterend", copiedCreate);
         azureCreate.remove();
 
-        const azureCreateLink = document.getElementById('createAccount');
+        const azureCreateLink = document.getElementById(createAccountId);
         azureCreateLink.setAttribute('class', 'createAccountLink');
         azureCreateLink.textContent = "Create";
 
 
         // Copy "forgot password" link and move directly under our created password-input-wrapper
-        const azureForgotPassword = document.getElementById('forgotPassword');
-        const azurePasswordInput = document.getElementById('password');
+        const azureForgotPassword = document.getElementById(forgotPasswordId);
+        const azurePasswordInput = document.getElementById(passwordId);
         const copiedForgotPassword = azureForgotPassword.cloneNode(true);
         azurePasswordInput.parentElement.insertAdjacentElement("afterend", copiedForgotPassword); 
         azureForgotPassword.remove();
