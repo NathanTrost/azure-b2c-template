@@ -38,7 +38,6 @@
         } else {
           apiDevForm.setAttribute("id", 'api');
         };
-        debugger;
       }
           
        const buildToggleButton = (passwordInput) => {
@@ -126,33 +125,16 @@
       };
 
 
-      const waitForContentToLoad = (doStuff) => {
-        if (window.jQuery) {
-         $(document).ready(() => doStuff());
-        } else {
-          setTimeout(() => doStuff(), 500);
-        }
-
-      }
 
 
-
-      waitForContentToLoad(() => {
-
+      document.addEventListener('DOMContentLoaded', (event) => {
         handleDevMockContent();
-
         copyOriginalAzureNodes();
-
         createPwdToggleButtons();
         // Make smooth CSS transition for api form elements
         const azureForm =  document.getElementById('api');
         azureForm.style.display = 'block';
       });
-
-      // setTimeout(() => {
-
-      // }, 500);
-
     </script>
   </head>
   <body>
