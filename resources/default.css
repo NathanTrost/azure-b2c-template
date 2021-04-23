@@ -1,4 +1,6 @@
-/* Following are styles copied over from azures template. */
+/* Following are styles copied over from azure's template. */
+/* We can pair these styles down significantly, and eventually should be able to get everything
+in a single stylesheet. (custom.css for now) */
 html {
   background: 0 0;
 }
@@ -1003,21 +1005,5 @@ html {
     text-align: left;
     margin-left: 0;
     width: 100%;
-  }
-  .unified_container
-    .row
-    .panel-default
-    #api
-    .localAccount
-    .entry
-    .entry-item
-    .password-label
-    #forgotPassword {
-    bottom: -1rem;
-  }
-  .forgot-password.center-height {
-    top: 0;
-    right: 12rem;
-    position: relative;
   }
 }
