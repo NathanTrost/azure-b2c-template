@@ -60,7 +60,7 @@
         button.onkeydown = toggleVisibility;
       }
 
-      const createPwdToggleButtons() {
+      const createPwdToggleButtons = () => {
         const passwordInputs = document.querySelectorAll("input[type=password]");
         passwordInputs.forEach((input) => buildToggleButton(input));
       }
@@ -70,7 +70,7 @@
         wrapper.appendChild(el);
       }
 
-      const copyOriginalAzureNodes() {
+      const copyOriginalAzureNodes = () => {
         // Wrap labels & make them uniform
         const azureLabels = document.querySelectorAll('.entry-item label');
         azureLabels.forEach((label) => {
