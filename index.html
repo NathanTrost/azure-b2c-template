@@ -94,8 +94,8 @@
         azureInputs.forEach((input) => {
           const inputWrapper = document.createElement('div');
           Object.assign(inputWrapper, {
-            id: `${input.type}-form-wrapper`,
-            className: `form-wrapper-${input.type} form-wrapper`
+            id: `${input.type}-input-wrapper`,
+            className: `input-wrapper-${input.type} input-wrapper`
           });
           wrap(input, inputWrapper)
         });
@@ -121,7 +121,7 @@
         });
 
         const azureForgotPassword = document.getElementById(forgotPasswordId);
-        azureForgotPassword.setAttribute("class", "forgotPassword link");
+        azureForgotPassword.setAttribute("class", "forgotPasswordLink link");
 
         // Remove "or" divider, we could also just hide this.
         const azureDivider = document.querySelector('.divider');

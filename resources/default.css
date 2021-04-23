@@ -813,32 +813,7 @@ html {
 .unified_container .row .panel-default #api .localAccount .create p {
   text-align: left;
 }
-.unified_container
-  .row
-  .panel-default
-  #api
-  .localAccount
-  .create
-  #createAccount {
-  border-radius: 0.5rem;
-  display: inline-block;
-  font-size: 1em;
-  font-weight: 400;
-  height: inherit;
-  line-height: 1.3333333;
-  padding: 10px 16px;
-  text-align: center;
-  touch-action: manipulation;
-  user-select: none;
-  white-space: nowrap;
-  -moz-user-select: none;
-  -ms-touch-action: manipulation;
-  -ms-user-select: none;
-  -webkit-user-select: none;
-  width: auto;
-  cursor: pointer;
-  animation: 0.5s ease-out 0s 1 slideInFromRight;
-}
+
 .unified_container .row .panel-default #api .social {
   display: table-footer-group;
   position: relative;
