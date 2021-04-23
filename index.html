@@ -107,17 +107,22 @@
         })
         // Copy "create account" node and move it below "Sign in" text
         const azureCreate = document.querySelector('.create');
+        const copiedCreate = azureCreate.cloneNode(true);
         const azureIntro = document.querySelector('.intro');
-        azureIntro.insertAdjacentElement("afterend", azureCreate);
+        azureIntro.insertAdjacentElement("afterend", copiedCreate);
+        azureCreate.remove();
 
         const azureCreateLink = document.getElementById('createAccount');
         azureCreateLink.setAttribute('class', 'createAccountLink');
-        azureCreateLink.textContent = "Create one.";
+        azureCreateLink.textContent = "Create";
+
 
         // Copy "forgot password" link and move directly under our created password-input-wrapper
         const azureForgotPassword = document.getElementById('forgotPassword');
         const azurePasswordInput = document.getElementById('password');
-        azurePasswordInput.parentElement.insertAdjacentElement("afterend", azureForgotPassword); 
+        const copiedForgotPassword = azureForgotPassword.cloneNode(true);
+        azurePasswordInput.parentElement.insertAdjacentElement("afterend", copiedForgotPassword); 
+        azureForgotPassword.remove();
 
         // Remove "or" divider, we could also just hide this.
         const azureDivider = document.querySelector('.divider');
