@@ -55,20 +55,10 @@
           buildToggleButton(pwdInputs[i]);
         }
       }
-
-    function wrap(el, wrapper) {
-        el.parentNode.insertBefore(wrapper, el);
-        wrapper.appendChild(el);
-      }
-
  
       function copyOriginalAzureNodes() {
-        var azurePasswordInput = document.getElementById('password');
-
-
         // Copy "create account" node and move it below "Sign in" text
         var azureCreate = document.querySelector('.create');
-        debugger;
         var newCreate = azureCreate.cloneNode(true);
         var azureIntro = document.querySelector('.intro');
         azureIntro.insertAdjacentElement("afterend", newCreate);
@@ -76,8 +66,9 @@
         // Copy "forgot password" link and move directly under our created password-input-wrapper
         var azureForgotPassword = document.getElementById('forgotPassword');
         var newForgotPassword = azureForgotPassword.cloneNode(true);
-        newForgotPassword.setAttribute('id', 'amuForgotPassword');       
-        // passwordInputWrapper.insertAdjacentElement("afterend", newForgotPassword);
+        newForgotPassword.setAttribute('id', 'amuForgotPassword');  
+
+        var azurePasswordInput = document.getElementById('password');
         azurePasswordInput.insertAdjacentElement("afterend", newForgotPassword);
   
 
@@ -101,7 +92,7 @@
 
 
       setTimeout(() => {
-        showInDev();
+        // showInDev();
         copyOriginalAzureNodes();
         addAutoCompleteToEmailField();  
         createPwdToggleButtons();
