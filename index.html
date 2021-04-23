@@ -81,6 +81,10 @@
         var azureIntro = document.querySelector('.intro');
         azureIntro.insertAdjacentElement("afterend", newCreate);
 
+        var azureCreateLink = document.getElementById('createAccount');
+        azureCreateLink.setAttribute('class', 'createAccountLink');
+        azureCreateLink.innerText("Create one.");
+
         // Copy "forgot password" link and move directly under our created password-input-wrapper
         var azureForgotPassword = document.getElementById('forgotPassword');
         var newForgotPassword = azureForgotPassword.cloneNode(true);
