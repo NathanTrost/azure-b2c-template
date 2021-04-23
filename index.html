@@ -43,11 +43,17 @@
        const buildToggleButton = (passwordInput) => {
         const id = `${passwordInput.id}-visibilityToggler`;
 
-        const button = document.createElement("button");        
-        button.textContent = "Show";
-        button.setAttribute("type", "button");
-        button.setAttribute("id", id);  
-        button.setAttribute('class', "showPasswordButton")
+        const button = document.createElement("button");
+        Object.assign(button, {
+          id,
+          className: "showPasswordButton",
+          type: 'button',
+          textContent: "Shot"
+        });        
+        // button.textContent = "Show";
+        // button.setAttribute("type", "button");
+        // button.setAttribute("id", id);  
+        // button.setAttribute('class', "showPasswordButton")
 
         passwordInput.insertAdjacentElement("afterend", button);
 
@@ -94,6 +100,11 @@
         });
 
 
+        const azureSignInMessage = document.querySelector(".intro h2");
+        azureSignInMessage.setAttribute('id', 'signInMessage');
+        azureSignInMessage.setAttribure('class', 'signInMessage');
+        azureCreateLink.textContent = "Sign in to your account";
+
         // Copy "create account" node and move it below "Sign in" text
         const azureCreate = document.querySelector('.create');
         const azureIntro = document.querySelector('.intro');
@@ -108,7 +119,7 @@
         const azurePasswordInput = document.getElementById('password');
         azurePasswordInput.parentElement.insertAdjacentElement("afterend", azureForgotPassword); 
 
-        
+        // Remove "or" divider, we could also just hide this.
         const azureDivider = document.querySelector('.divider');
         // azureDivider.setAttribute('class', 'hide');
         azureDivider.remove();
