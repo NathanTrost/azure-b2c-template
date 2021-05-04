@@ -42,8 +42,9 @@
           );
           // Remove test data
           return apiDevForm.remove();
+        } else {
+          return (apiDevForm.style.display = "block");
         }
-        return (apiDevForm.style.display = "block");
       };
 
       const buildToggleButton = (passwordInput) => {
