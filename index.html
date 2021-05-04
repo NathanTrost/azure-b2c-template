@@ -100,8 +100,10 @@
         const azureInputs = document.querySelectorAll(".entry-item input");
         azureInputs.forEach((input) => {
           const inputWrapper = document.createElement("div");
-          input.setAttribute("class", "form-control");
-          input.setAttribute("autocomplete", input.type);
+          Object.assign(input, {
+            className: "form-control",
+            autoComplete: input.type,
+          });
           Object.assign(inputWrapper, {
             id: `input--wrapper__${input.type}`,
             className: `input--wrapper__${input.type} input-group`,
