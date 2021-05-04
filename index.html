@@ -4,129 +4,126 @@
     <meta name="viewport" content="width=device-width" />
     <meta charset="utf-8" />
     <title>Sign up or sign in</title>
-    <meta name="next-head-count" content="3" />    
+    <meta name="next-head-count" content="3" />
     <!-- Not sure that we want bootstrap here or not, since our styles are somewhat
     based off of bs, it'll probably be ideal to eventually pull 
     from TPS's stylesheet if possible. -->
-    <!-- <link
+    <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
-    /> -->
-
-    <link
-      rel="stylesheet"
-      href="https://cdn.statically.io/gh/NathanTrost/azure-b2c-template/gh-pages/resources/default.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.statically.io/gh/NathanTrost/azure-b2c-template/gh-pages/resources/custom.css"
     />
 
-  
+    <link rel="stylesheet" href="resources/styles.css" />
 
     <script>
-        const localBuildUrl = 'http://localhost:5000/'; // Use serve package
-        const ghPagesUrl = "https://nathantrost.github.io/azure-b2c-template/"; // Local gh page
-        const isLiveAzure = 
-        !(window.location.href === localBuildUrl || 
-        window.location.href === ghPagesUrl); 
+      const localBuildUrl = "http://localhost:5000/"; // Use serve package locally
+      const ghPagesUrl = "https://nathantrost.github.io/azure-b2c-template/"; // Local gh page
+      const isLiveAzure = !(
+        window.location.href === localBuildUrl ||
+        window.location.href === ghPagesUrl
+      );
 
-        const envId = (name) => isLiveAzure ? name : `${name}-dev`;
-        const createAccountId = envId("createAccount");
-        const forgotPasswordId = envId("forgotPassword");
-        const passwordId = envId("password");
+      const envId = (name) => (isLiveAzure ? name : `${name}-dev`);
+      const createAccountId = envId("createAccount");
+      const forgotPasswordId = envId("forgotPassword");
+      const passwordId = envId("password");
 
       // Show mock form if in local or gh-pages environments,
       // This is a copy from basic azure form, with all id's appended with '-dev'
       // We instantly remove this node if we're not in development environment
       const handleDevMockContent = () => {
-        const apiDevForm = document.getElementById('api-dev');
-        return (isLiveAzure) ? apiDevForm.remove() : apiDevForm.style.display = 'block';
-      }
-          
-       const buildToggleButton = (passwordInput) => {
+        const apiDevForm = document.getElementById("api-dev");
+        return isLiveAzure
+          ? apiDevForm.remove()
+          : (apiDevForm.style.display = "block");
+      };
+
+      const buildToggleButton = (passwordInput) => {
         const id = `${passwordInput.id}-visibilityToggler`;
 
         const button = document.createElement("button");
         Object.assign(button, {
           id,
-          className: "showPasswordButton link",
-          type: 'button',
-          textContent: "Show"
-        });        
+          className: "showPasswordButton link input-group-append",
+          type: "button",
+          textContent: "Show",
+        });
         passwordInput.insertAdjacentElement("afterend", button);
 
-        const toggleVisibility = () => 
-          passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
-      
+        const toggleVisibility = () =>
+          (passwordInput.type =
+            passwordInput.type === "password" ? "text" : "password");
 
         button.onclick = toggleVisibility;
         // For non-mouse usage
         button.onkeydown = toggleVisibility;
-      }
+      };
 
       const createPwdToggleButtons = () => {
-        const passwordInputs = document.querySelectorAll("input[type=password]");
+        const passwordInputs = document.querySelectorAll(
+          "input[type=password]"
+        );
         passwordInputs.forEach((input) => buildToggleButton(input));
-      }
- 
+      };
+
       const wrap = (el, wrapper) => {
         el.parentNode.insertBefore(wrapper, el);
         wrapper.appendChild(el);
-      }
+      };
 
       const shapeAzureForm = () => {
         // Wrap labels & make them uniform
-        const azureLabels = document.querySelectorAll('.entry-item label');
+        const azureLabels = document.querySelectorAll(".entry-item label");
         azureLabels.forEach((label) => {
-          if (label.parentElement.className === 'entry-item') {
-            labelWrapper = document.createElement('div');
+          if (label.parentElement.className === "entry-item") {
+            labelWrapper = document.createElement("div");
             Object.assign(labelWrapper, {
               id: `${label.htmlFor}-label-wrapper`,
-              className: `label-wrapper-${label.htmlFor} form-label`
-            })
-          wrap(label, labelWrapper)
+              className: `label-wrapper-${label.htmlFor} label--wrapper`,
+            });
+            wrap(label, labelWrapper);
           } else {
-            label.parentElement.classList.add('form-label')
+            label.parentElement.classList.add("label--wrapper");
           }
-       });
+        });
 
         // Wrap inputs
         const azureInputs = document.querySelectorAll(".entry-item input");
         azureInputs.forEach((input) => {
-          const inputWrapper = document.createElement('div');
+          const inputWrapper = document.createElement("div");
+          input.setAttribute("class", "form-control");
           Object.assign(inputWrapper, {
-            id: `${input.type}-input-wrapper`,
-            className: `input-wrapper-${input.type} input-wrapper`
+            id: `input--wrapper__${input.type}`,
+            className: `input--wrapper__${input.type} input-group`,
           });
-          wrap(input, inputWrapper)
+          wrap(input, inputWrapper);
         });
-
 
         const azureSignInMessage = document.querySelector(".intro h2");
         Object.assign(azureSignInMessage, {
-          id: 'signInMessage',
-          className: 'signInMessage',
-          textContent: 'Sign in to your account'
-        })
+          id: "signInMessage",
+          className: "signInMessage",
+          textContent: "Sign in to your account",
+        });
+
         // Copy "create account" node and move it below "Sign in" text
-        const azureCreate = document.querySelector('.create');
+        const azureCreate = document.querySelector(".create");
         const copiedCreate = azureCreate.cloneNode(true);
-        const azureIntro = document.querySelector('.intro');
+        const azureIntro = document.querySelector(".intro");
         azureIntro.insertAdjacentElement("afterend", copiedCreate);
         azureCreate.remove();
 
         const azureCreateLink = document.getElementById(createAccountId);
         Object.assign(azureCreateLink, {
-          className: 'createAccountLink link',
-          textContent: "Create"
+          className: "createAccountLink link",
+          textContent: "Create",
         });
 
         const azureForgotPassword = document.getElementById(forgotPasswordId);
         azureForgotPassword.setAttribute("class", "forgotPasswordLink link");
 
         // Remove "or" divider, we could also just hide this.
-        const azureDivider = document.querySelector('.divider');
+        const azureDivider = document.querySelector(".divider");
         azureDivider.remove();
       };
 
@@ -134,105 +131,131 @@
       const elementReady = (selector) => {
         return new Promise((resolve, reject) => {
           let el = document.querySelector(selector);
-          if (el) {resolve(el);}
+          if (el) {
+            resolve(el);
+          }
           new MutationObserver((mutationRecords, observer) => {
             // Query for elements matching the specified selector
-            Array.from(document.querySelectorAll(selector)).forEach((element) => {
-              resolve(element);
-              //Once we have resolved we don't need the observer anymore.
-              observer.disconnect();
-            });
-          })
-            .observe(document.documentElement, {
-              childList: true,
-              subtree: true
-            });
+            Array.from(document.querySelectorAll(selector)).forEach(
+              (element) => {
+                resolve(element);
+                //Once we have resolved we don't need the observer anymore.
+                observer.disconnect();
+              }
+            );
+          }).observe(document.documentElement, {
+            childList: true,
+            subtree: true,
+          });
         });
-      }
-   
+      };
+
       setTimeout(() => {
         handleDevMockContent();
         elementReady("#api").then(() => {
           shapeAzureForm();
           createPwdToggleButtons();
           // Make smooth CSS transition for api form elements
-          const azureForm =  document.getElementById('api');
-          azureForm.style.display = 'block';
-        })
-      }, 500)
-
+          const azureForm = document.getElementById("api");
+          azureForm.style.display = "block";
+        });
+      }, 500);
     </script>
   </head>
   <body>
-    <div class="home_container">
-      <div class="container unified_container" role="presentation">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <h3 className="signin-header">Sign in to your account</h1>
-                
-                <div id="api-dev" style="display:none;">
-            
-                  <form id="localAccountForm-dev" action="JavaScript:void(0);" class="localAccount" aria-label="Sign in with your email address">
-                    <div class="intro">
-                      <h2 aria-level="1">
-                        Sign in with your email address
-                      </h2>
-                    </div>
-                    <div class="error pageLevel" aria-hidden="true" role="alert" style="display: none;">
-                      <p></p>
-                    </div>
-                    <div class="entry">
-                      <div class="entry-item">
-                        <label for="email">
-                          Email Address
-                        </label>
-                        <div class="error itemLevel" aria-hidden="true" role="alert" style="display: none;">
-                          <p></p>
-                        </div>
-                        <input autocomplete="email" type="email" id="email-dev" name="Email Address" title="Please enter a valid Email Address" pattern="^[a-zA-Z0-9!#$%&amp;'+^_`{}~-]+(?:\.[a-zA-Z0-9!#$%&amp;'+^_`{}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$" autofocus="" placeholder="Email Address" aria-label="Email Address">
-                      </div>
-                        <div class="entry-item">
-                          <div class="password-label">
-                            <label for="password">Password</label>
-                                <a id="forgotPassword-dev" href="/amub2c.onmicrosoft.com/B2C_1_test2/api/CombinedSigninAndSignup/unified?claimsexchange=ForgotPassword&amp;csrf_token=QWhIZzdsellNNEsrelJ6TlcwS3dZMC9lT1ZnWFFMbFVwNVpEdUZFZGdwYmZHRkwzNXRnRkpWQlpBQ24vMml4UnFtRDUxUk9LdXZiK0lDeS9vZkRmWnc9PTsyMDIxLTA0LTIxVDE5OjQzOjUyLjAyNDQzWjt2OHpSWjJWbTVLeFZPRVQzVEJnYXJRPT07eyJPcmNoZXN0cmF0aW9uU3RlcCI6MX0=&amp;tx=StateProperties=eyJUSUQiOiJkMTMzOGRhNC03NmY0LTQ5ZGQtOGM3YS04ZGUwOWJhODA3YTkifQ&amp;p=B2C_1_test2">Forgot your password?</a>
-                                          </div>
-                          <div class="error itemLevel" aria-hidden="true" style="display: none;">
-                            <p role="alert"></p>
-                          </div>
-                          <input autocomplete="current-password"  type="password" id="password-dev" name="Password" placeholder="Password" aria-label="Password" autocomplete="current-password" aria-required="true">
-                          
-                                      </div>
-                      <div class="working"></div>
-            
-            
-                      <div class="buttons">
-                        <button id="next-dev" type="submit" form="localAccountForm">Sign in</button>
-                      </div>
-                    </div>
-                          <div class="divider">
-                            <h2>OR</h2>
-                          </div>
-                          <div class="create">
-                            <p>
-                              Don't have an account?<a id="createAccount-dev" href="/amub2c.onmicrosoft.com/B2C_1_test2/api/CombinedSigninAndSignup/unified?local=signup&amp;csrf_token=QWhIZzdsellNNEsrelJ6TlcwS3dZMC9lT1ZnWFFMbFVwNVpEdUZFZGdwYmZHRkwzNXRnRkpWQlpBQ24vMml4UnFtRDUxUk9LdXZiK0lDeS9vZkRmWnc9PTsyMDIxLTA0LTIxVDE5OjQzOjUyLjAyNDQzWjt2OHpSWjJWbTVLeFZPRVQzVEJnYXJRPT07eyJPcmNoZXN0cmF0aW9uU3RlcCI6MX0=&amp;tx=StateProperties=eyJUSUQiOiJkMTMzOGRhNC03NmY0LTQ5ZGQtOGM3YS04ZGUwOWJhODA3YTkifQ&amp;p=B2C_1_test2">Sign up now</a>
-                            </p>
-                          </div>
-                  </form>
-             
-                
-                </div>
-              
-                <div id="api" style="display: none;"></div>
+    <div class="container">
+      <div id="api-dev" style="display: none">
+        <form
+          id="localAccountForm-dev"
+          action="JavaScript:void(0);"
+          class="localAccount"
+          aria-label="Sign in with your email address"
+        >
+          <div class="intro">
+            <h2 aria-level="1">Sign in with your email address</h2>
+          </div>
+          <div
+            class="error pageLevel"
+            aria-hidden="true"
+            role="alert"
+            style="display: none"
+          >
+            <p></p>
+          </div>
+          <div class="entry">
+            <div class="entry-item">
+              <label for="email"> Email Address </label>
+              <div
+                class="error itemLevel"
+                aria-hidden="true"
+                role="alert"
+                style="display: none"
+              >
+                <p></p>
               </div>
-              
-             
+              <input
+                autocomplete="email"
+                type="email"
+                id="email-dev"
+                name="Email Address"
+                title="Please enter a valid Email Address"
+                pattern="^[a-zA-Z0-9!#$%&amp;'+^_`{}~-]+(?:\.[a-zA-Z0-9!#$%&amp;'+^_`{}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"
+                autofocus=""
+                placeholder="Email Address"
+                aria-label="Email Address"
+              />
             </div>
+            <div class="entry-item">
+              <div class="password-label">
+                <label for="password">Password</label>
+                <a
+                  id="forgotPassword-dev"
+                  href="/amub2c.onmicrosoft.com/B2C_1_test2/api/CombinedSigninAndSignup/unified?claimsexchange=ForgotPassword&amp;csrf_token=QWhIZzdsellNNEsrelJ6TlcwS3dZMC9lT1ZnWFFMbFVwNVpEdUZFZGdwYmZHRkwzNXRnRkpWQlpBQ24vMml4UnFtRDUxUk9LdXZiK0lDeS9vZkRmWnc9PTsyMDIxLTA0LTIxVDE5OjQzOjUyLjAyNDQzWjt2OHpSWjJWbTVLeFZPRVQzVEJnYXJRPT07eyJPcmNoZXN0cmF0aW9uU3RlcCI6MX0=&amp;tx=StateProperties=eyJUSUQiOiJkMTMzOGRhNC03NmY0LTQ5ZGQtOGM3YS04ZGUwOWJhODA3YTkifQ&amp;p=B2C_1_test2"
+                  >Forgot your password?</a
+                >
+              </div>
+              <div
+                class="error itemLevel"
+                aria-hidden="true"
+                style="display: none"
+              >
+                <p role="alert"></p>
+              </div>
+              <input
+                autocomplete="current-password"
+                type="password"
+                id="password-dev"
+                name="Password"
+                placeholder="Password"
+                aria-label="Password"
+                autocomplete="current-password"
+                aria-required="true"
+              />
+            </div>
+            <div class="working"></div>
+
+            <div class="buttons">
+              <button id="next-dev" type="submit" form="localAccountForm">
+                Sign in
+              </button>
             </div>
           </div>
-        </div>
+          <div class="divider">
+            <h2>OR</h2>
+          </div>
+          <div class="create">
+            <p>
+              Don't have an account?<a
+                id="createAccount-dev"
+                href="/amub2c.onmicrosoft.com/B2C_1_test2/api/CombinedSigninAndSignup/unified?local=signup&amp;csrf_token=QWhIZzdsellNNEsrelJ6TlcwS3dZMC9lT1ZnWFFMbFVwNVpEdUZFZGdwYmZHRkwzNXRnRkpWQlpBQ24vMml4UnFtRDUxUk9LdXZiK0lDeS9vZkRmWnc9PTsyMDIxLTA0LTIxVDE5OjQzOjUyLjAyNDQzWjt2OHpSWjJWbTVLeFZPRVQzVEJnYXJRPT07eyJPcmNoZXN0cmF0aW9uU3RlcCI6MX0=&amp;tx=StateProperties=eyJUSUQiOiJkMTMzOGRhNC03NmY0LTQ5ZGQtOGM3YS04ZGUwOWJhODA3YTkifQ&amp;p=B2C_1_test2"
+                >Sign up now</a
+              >
+            </p>
+          </div>
+        </form>
       </div>
+
+      <div id="api" style="display: none"></div>
     </div>
   </body>
 </html>
