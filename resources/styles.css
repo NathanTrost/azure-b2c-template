@@ -17,6 +17,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 350px;
 }
 
 .buttons button {
@@ -38,12 +39,25 @@ body {
   opacity: 0.3;
 }
 
-.label--wrapper {
+.liveValidationBlock {
+  display: none;
+  padding: 0.5rem 0;
+  font-size: 0.8rem;
+}
+
+.inputWrapper__invalid .input-group {
+  border-color: red;
+}
+.inputWrapper__invalid .liveValidationBlock {
+  display: block;
+}
+
+.labelWrapper {
   text-align: left;
   color: #777;
   margin: 0.5rem 0 0.25rem;
 }
-.label--wrapper label {
+.labelWrapper label {
   font-weight: 600;
 }
 
@@ -56,7 +70,7 @@ body {
   border-width: 1px;
 }
 
-.input-group input {
+.input-group .form-control {
   border-radius: 0.5rem;
   outline: 0;
   background-color: transparent;
@@ -66,13 +80,14 @@ body {
 .showPasswordButton {
   background-color: transparent;
   border: 1px solid transparent;
+  text-transform: uppercase;
 }
 
 .link {
   color: #24b1fb;
   display: inline-block;
   font-size: 1em;
-  font-weight: 400;
+  font-weight: 500;
   height: inherit;
   line-height: 1.3333333;
   text-align: center;

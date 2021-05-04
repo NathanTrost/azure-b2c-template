@@ -24,9 +24,23 @@
       );
 
       const envId = (name) => (isLiveAzure ? name : `${name}-dev`);
-      const createAccountId = envId("createAccount");
-      const forgotPasswordId = envId("forgotPassword");
-      const passwordId = envId("password");
+      const submitButtonId = envId("next");
+
+      let inputValidation = {};
+
+      // Minimum eight and maximum 30 characters,
+      // At least 1 special character
+      // At least 1 number
+      // At least 1 uppercase and 1 lowercase letter
+      const passwordCriteriaRegex =
+        "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}$";
+
+      const liveValidationErrorDefinitions = {
+        email:
+          "<strong>Try again</strong>. Please enter a valid email address that includes an @ sign and a domain, like abc@mail.com.",
+        password:
+          "Your password must be at least eight characters long, and contain at least one special character, one number, one lowercase letter, and one uppercase letter.",
+      };
 
       // Show mock form if in local or gh-pages environments,
       // This is a copy from basic azure form, with all id's appended with '-dev'
@@ -68,11 +82,35 @@
         button.onkeydown = toggleVisibility;
       };
 
-      const createPwdToggleButtons = () => {
+      const createPasswordToggleButtons = () => {
         const passwordInputs = document.querySelectorAll(
           "input[type=password]"
         );
         passwordInputs.forEach((input) => buildToggleButton(input));
+      };
+
+      const validateField = (event) => {
+        const { id, pattern, value } = event.target;
+        const isValid = new RegExp(pattern).test(value);
+        const fieldWrapper = document.getElementById(`inputWrapper-${id}`);
+
+        if (value.length && !isValid) {
+          fieldWrapper.classList.add("inputWrapper__invalid");
+        } else {
+          fieldWrapper.classList.remove("inputWrapper__invalid");
+        }
+        inputValidation[id] = isValid;
+        submitButtonValidation();
+      };
+
+      const submitButtonValidation = () => {
+        const allInputsAreValid = Object.keys(inputValidation).every(
+          (input) => inputValidation[input] === true
+        );
+        const submitButton = document.getElementById(submitButtonId);
+        Object.assign(submitButton, {
+          disabled: !allInputsAreValid,
+        });
       };
 
       const wrap = (el, wrapper) => {
@@ -80,37 +118,71 @@
         wrapper.appendChild(el);
       };
 
-      const shapeAzureForm = () => {
+      const shapeEntryItems = () => {
+        // Add unique id and custom classes to 'entry-item'
+        const azureWrappers = document.querySelectorAll(".entry-item");
+        azureWrappers.forEach((wrapper) => {
+          const { id } = wrapper.querySelector("input");
+          wrapper.setAttribute("id", `inputWrapper-${id}`);
+          wrapper.classList.add("inputWrapper", `inputWrapper__${id}`);
+        });
+      };
+
+      const shapeFormLabels = () => {
         // Wrap labels & make them uniform
         const azureLabels = document.querySelectorAll(".entry-item label");
         azureLabels.forEach((label) => {
-          if (label.parentElement.className === "entry-item") {
+          if (label.parentElement.classList.contains("entry-item")) {
             labelWrapper = document.createElement("div");
             Object.assign(labelWrapper, {
               id: `${label.htmlFor}-label-wrapper`,
-              className: `label-wrapper-${label.htmlFor} label--wrapper`,
+              className: `labelWrapper__${label.htmlFor} labelWrapper`,
             });
             wrap(label, labelWrapper);
           } else {
-            label.parentElement.classList.add("label--wrapper");
+            label.parentElement.classList.add("labelWrapper");
           }
         });
+      };
 
-        // Wrap inputs
+      const shapeInputs = () => {
+        // Wrap inputs and use BS 'input-group' & 'form-control' classes
         const azureInputs = document.querySelectorAll(".entry-item input");
         azureInputs.forEach((input) => {
-          const inputWrapper = document.createElement("div");
+          const inputGroup = document.createElement("div");
+
+          let { pattern } = input;
+          if (!pattern) {
+            pattern = input.type === "password" ? passwordCriteriaRegex : ".*";
+          }
+
           Object.assign(input, {
             className: "form-control",
             autoComplete: input.type,
+            onblur: validateField,
+            pattern,
           });
-          Object.assign(inputWrapper, {
-            id: `input--wrapper__${input.type}`,
-            className: `input--wrapper__${input.type} input-group`,
+          Object.assign(inputGroup, {
+            id: `inputGroup-${input.id}`,
+            className: `inputGroup__${input.id} input-group`,
           });
-          wrap(input, inputWrapper);
-        });
+          const errorBlock = document.createElement("div");
+          Object.assign(errorBlock, {
+            id: `liveValidationBlock-${input.id}`,
+            className: "liveValidationBlock",
+          });
+          errorBlock.innerHTML = liveValidationErrorDefinitions[input.type];
 
+          wrap(input, inputGroup);
+          inputGroup.insertAdjacentElement("afterend", errorBlock);
+
+          // Add each input to inputValidation object so we can keep track of
+          // what's valid and what isn't
+          inputValidation[input.id] = false;
+        });
+      };
+
+      const shapeNonInputElements = () => {
         const azureSignInMessage = document.querySelector(".intro h2");
         Object.assign(azureSignInMessage, {
           id: "signInMessage",
@@ -125,18 +197,30 @@
         azureIntro.insertAdjacentElement("afterend", copiedCreate);
         azureCreate.remove();
 
+        const createAccountId = envId("createAccount");
         const azureCreateLink = document.getElementById(createAccountId);
         Object.assign(azureCreateLink, {
           className: "createAccountLink link",
           textContent: "Create",
         });
 
+        const forgotPasswordId = envId("forgotPassword");
         const azureForgotPassword = document.getElementById(forgotPasswordId);
         azureForgotPassword.setAttribute("class", "forgotPasswordLink link");
 
         // Remove "or" divider, we could also just hide this.
         const azureDivider = document.querySelector(".divider");
         azureDivider.remove();
+      };
+
+      const shapeSubmitButton = () => {
+        const submitButton = document.getElementById(submitButtonId);
+        Object.assign(submitButton, {
+          className: "btn btn-primary",
+          disabled: true,
+        });
+
+        console.log("shaping?", submitButton);
       };
 
       // Copied from https://gist.github.com/jwilson8767/db379026efcbd932f64382db4b02853e
@@ -165,8 +249,12 @@
       setTimeout(() => {
         handleDevMockContent();
         elementReady("#api").then(() => {
-          shapeAzureForm();
-          createPwdToggleButtons();
+          shapeEntryItems();
+          shapeFormLabels();
+          shapeInputs();
+          shapeSubmitButton();
+          shapeNonInputElements();
+          createPasswordToggleButtons();
           // Make smooth CSS transition for api form elements
           const azureForm = document.getElementById("api");
           azureForm.style.display = "block";
@@ -243,6 +331,7 @@
                 aria-label="Password"
                 autocomplete="current-password"
                 aria-required="true"
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}$"
               />
             </div>
             <div class="working"></div>
