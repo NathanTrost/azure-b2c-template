@@ -13,13 +13,15 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
     />
 
-    <link rel="stylesheet" href="resources/styles.css" />
+    <link id="local-stylesheet" rel="stylesheet" href="resources/styles.css" />
 
     <script>
       const localBuildUrl = "http://localhost:5000/"; // Use serve package locally
       const ghPagesUrl = "https://nathantrost.github.io/azure-b2c-template/"; // Local gh page
-      const isLiveAzure = !(window.location.href === localBuildUrl);
-      console.log(isLiveAzure);
+      const isLiveAzure = !(
+        window.location.href === localBuildUrl ||
+        window.location.href === ghPagesUrl
+      );
 
       const envId = (name) => (isLiveAzure ? name : `${name}-dev`);
       const createAccountId = envId("createAccount");
@@ -31,9 +33,17 @@
       // We instantly remove this node if we're not in development environment
       const handleDevMockContent = () => {
         const apiDevForm = document.getElementById("api-dev");
-        return isLiveAzure
-          ? apiDevForm.remove()
-          : (apiDevForm.style.display = "block");
+        if (isLiveAzure) {
+          // direct stylesheet to ghpages
+          const localStylesheet = document.getElementById("local-stylesheet");
+          localStylesheet.setAttribute(
+            "href",
+            `${ghPagesUrl}/${localStylesheet.getAttribute("href")}`
+          );
+          // Remove test data
+          return apiDevForm.remove();
+        }
+        return (apiDevForm.style.display = "block");
       };
 
       const buildToggleButton = (passwordInput) => {
@@ -160,6 +170,7 @@
       }, 500);
     </script>
   </head>
+
   <body>
     <div class="container">
       <div id="api-dev" style="display: none">
@@ -208,7 +219,7 @@
                 <label for="password">Password</label>
                 <a
                   id="forgotPassword-dev"
-                  href="/amub2c.onmicrosoft.com/B2C_1_test2/api/CombinedSigninAndSignup/unified?claimsexchange=ForgotPassword&amp;csrf_token=QWhIZzdsellNNEsrelJ6TlcwS3dZMC9lT1ZnWFFMbFVwNVpEdUZFZGdwYmZHRkwzNXRnRkpWQlpBQ24vMml4UnFtRDUxUk9LdXZiK0lDeS9vZkRmWnc9PTsyMDIxLTA0LTIxVDE5OjQzOjUyLjAyNDQzWjt2OHpSWjJWbTVLeFZPRVQzVEJnYXJRPT07eyJPcmNoZXN0cmF0aW9uU3RlcCI6MX0=&amp;tx=StateProperties=eyJUSUQiOiJkMTMzOGRhNC03NmY0LTQ5ZGQtOGM3YS04ZGUwOWJhODA3YTkifQ&amp;p=B2C_1_test2"
+                  href="/amub2c.onmicrosoft.com/B2C_1_test2/api/CombinedSigninAndSignup/unified?claimsexchange=ForgotPassword&amp;csrf_token=mockToken4LocalDevelopment&amp;p=B2C_1_test2"
                   >Forgot your password?</a
                 >
               </div>
@@ -245,7 +256,7 @@
             <p>
               Don't have an account?<a
                 id="createAccount-dev"
-                href="/amub2c.onmicrosoft.com/B2C_1_test2/api/CombinedSigninAndSignup/unified?local=signup&amp;csrf_token=QWhIZzdsellNNEsrelJ6TlcwS3dZMC9lT1ZnWFFMbFVwNVpEdUZFZGdwYmZHRkwzNXRnRkpWQlpBQ24vMml4UnFtRDUxUk9LdXZiK0lDeS9vZkRmWnc9PTsyMDIxLTA0LTIxVDE5OjQzOjUyLjAyNDQzWjt2OHpSWjJWbTVLeFZPRVQzVEJnYXJRPT07eyJPcmNoZXN0cmF0aW9uU3RlcCI6MX0=&amp;tx=StateProperties=eyJUSUQiOiJkMTMzOGRhNC03NmY0LTQ5ZGQtOGM3YS04ZGUwOWJhODA3YTkifQ&amp;p=B2C_1_test2"
+                href="/amub2c.onmicrosoft.com/B2C_1_test2/api/CombinedSigninAndSignup/unified?local=signup&amp;csrf_token=mockToken4LocalDevelopment&amp;p=B2C_1_test2"
                 >Sign up now</a
               >
             </p>
