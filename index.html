@@ -19,8 +19,9 @@
       const localBuildUrl = "http://localhost:5000/"; // Use serve package locally
       const ghPagesUrl = "https://nathantrost.github.io/azure-b2c-template/"; // Local gh page
       const isLiveAzure = !(
-        window.location.href === localBuildUrl ||
-        window.location.href === ghPagesUrl
+        (window.location.href === localBuildUrl)
+        // ||
+        // window.location.href === ghPagesUrl
       );
 
       const envId = (name) => (isLiveAzure ? name : `${name}-dev`);
