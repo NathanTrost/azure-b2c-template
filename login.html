@@ -23,8 +23,8 @@
       const ghPagesUrl = "https://nathantrost.github.io/azure-b2c-template/";
 
       const isLiveAzure = !(
-        window.location.href === localBuildUrl ||
-        window.location.href === ghPagesUrl
+        window.location.href.startsWith(localBuildUrl) ||
+        window.location.href.startsWith(ghPagesUrl)
       );
 
       const envId = (name) => (isLiveAzure ? name : `${name}-dev`);
