@@ -260,19 +260,12 @@
 
       setTimeout(() => {
         handleDevMockContent();
-        debugger;
         elementReady("#api").then(() => {
           shapeEntryItems();
-          debugger;
           shapeFormLabels();
-          debugger;
           shapeInputs();
-          debugger;
           shapeSubmitButton();
-          debugger;
           shapeNonInputElements();
-
-          debugger;
           createPasswordToggleButtons();
           // Make smooth CSS transition for api form elements
           const azureForm = document.getElementById("api");
