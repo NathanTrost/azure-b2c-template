@@ -220,14 +220,14 @@
           "forgotPasswordLink btn btn-link"
         );
 
-        const azureButtonWrapper = document.querySelector(".buttons");
-        azureButtonWrapper.classList.add("submitButtonWrapper");
         // Remove "or" divider, we could also just hide this.
         const azureDivider = document.querySelector(".divider");
         azureDivider.remove();
       };
 
       const shapeSubmitButton = () => {
+        const azureButtonWrapper = document.querySelector(".buttons");
+        azureButtonWrapper.classList.add("submitButtonWrapper");
         const submitButton = document.getElementById(submitButtonId);
         Object.assign(submitButton, {
           className: "btn btn-primary",
