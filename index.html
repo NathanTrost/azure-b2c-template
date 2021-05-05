@@ -57,7 +57,7 @@
           // Remove test data
           return apiDevForm.remove();
         } else {
-          return (apiDevForm.style.display = "block");
+          return (apiDevForm.style.opacity = 1);
         }
       };
 
@@ -266,7 +266,7 @@
           createPasswordToggleButtons();
           // Make smooth CSS transition for api form elements
           const azureForm = document.getElementById("api");
-          azureForm.style.display = "block";
+          azureForm.style.opacity = 1;
         });
       }, 500);
     </script>
@@ -274,7 +274,7 @@
 
   <body>
     <div class="container">
-      <div id="api-dev" style="display: none">
+      <div id="api-dev" style="opacity: 0">
         <form
           id="localAccountForm-dev"
           action="JavaScript:void(0);"
@@ -366,7 +366,7 @@
         </form>
       </div>
 
-      <div id="api" style="display: none"></div>
+      <div id="api" style="opacity: 0"></div>
     </div>
   </body>
 </html>
