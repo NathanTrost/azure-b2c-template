@@ -37,7 +37,8 @@ html,
 }
 
 body {
-  background-color: var(--ps-blue);
+  background: transparent linear-gradient(to bottom, #1eb1fc 0%, #0064a4 100%)
+    0% 0% no-repeat;
   font-family: var(--font-family);
   font-size: 1.5rem;
   background-attachment: fixed;
