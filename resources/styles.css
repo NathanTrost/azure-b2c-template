@@ -1,15 +1,14 @@
-/* Bootstrap overrides copied from TPS styles */
-
 html,
 :root {
   background: 0 0;
   font-size: 62.5%;
   /* Placeholder for new font */
-  --font-family: Avenir Next, sans-serif;
+  --font-family: niveau-grotesk, sans-serif;
+  --font-weight-default: 400;
+  --font-weight-bold: 700;
+
   /* Colors */
-  --dark-gold: #c87a15;
-  --ps-gold: #ffb730;
-  --light-gold: #ffe899;
+
   --dark-blue: #00233d;
   --ps-blue: #05354e;
   --medium-blue: #1e4c62;
@@ -18,13 +17,8 @@ html,
   --powder-blue: #b2dee3;
   --light-sky-blue: #8dd7fd;
   --dodger-blue: #1eb1fc;
-  --light-red: #fce5e3;
-  --light-yellow: #fff6db;
-  --light-green: #e2f3e4;
   --light-dodger: #dff4ff;
   --dark-red: #980d1d;
-  --dark-yellow: #ac6100;
-  --dark-green: #006a0c;
   --white: #fff;
   --gray-100: #eeeeee;
   --gray-200: #dddddd;
@@ -40,19 +34,32 @@ body {
   background: transparent linear-gradient(to bottom, #1eb1fc 0%, #0064a4 100%)
     0% 0% no-repeat;
   font-family: var(--font-family);
+  font-weight: var(--font-weight-default);
   font-size: 1.5rem;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   text-align: left;
   height: 100vh;
 }
 
+/* Azure ids */
+
+#api,
+#api-dev {
+  flex-grow: 1;
+}
+
+#localAccountForm,
+#localAccountForm-dev {
+  background-color: var(--white);
+  border-radius: 1rem;
+  padding: 3rem;
+}
+
+/* Bootstrap overrides copied from TPS styles */
+
 .btn {
   font-size: 1.5rem;
   border-radius: 1rem;
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   text-align: center;
   text-decoration: none;
 }
@@ -84,7 +91,7 @@ body {
 
 .btn-link {
   color: var(--dodger-blue);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
   text-decoration: none;
   touch-action: manipulation;
   user-select: none;
@@ -96,42 +103,19 @@ body {
 }
 
 .input-group {
-  border-radius: 0.5rem;
-  border: 1px solid var(--gray-500);
+  border-radius: 1rem;
+  border: 1px solid var(--gray-300);
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   width: 100%;
   outline: 0;
-  border-width: 1px;
 }
 
 .input-group .form-control {
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   outline: 0;
   background-color: transparent;
   border: none;
   font-size: 1.8rem;
-}
-
-/* Azure classes and ids */
-
-#api,
-#api-dev {
-  flex-grow: 1;
-}
-
-#localAccountForm,
-#localAccountForm-dev {
-  background-color: var(--white);
-  border-radius: 1rem;
-  padding: 3rem;
-}
-.create {
-  padding: 0.75rem 0;
-  font-size: 1.2rem;
-}
-.buttons {
-  text-align: center;
-  padding: 2.5rem;
 }
 
 /* Custom CSS */
@@ -147,7 +131,12 @@ body {
 .signInMessage {
   font-size: 2rem;
   text-transform: uppercase;
-  font-weight: 900;
+  font-weight: var(--font-weight-bold);
+}
+
+.create {
+  padding: 0.75rem 0;
+  font-size: 1.2rem;
 }
 
 .formWrapper {
@@ -156,12 +145,12 @@ body {
 
 .labelWrapper {
   text-align: left;
-  margin: 3.5rem 0 0.75rem;
+  margin: 2.25rem 0 0.5rem;
 }
 
 .labelWrapper label {
   color: var(--black);
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
 .liveValidationBlock {
@@ -183,13 +172,15 @@ body {
   text-transform: uppercase;
 }
 
-.createAccountLink {
+.createAccountLink,
+.forgotPasswordLink {
   animation: 0.5s ease-out 0s 1 slideInFromRight;
 }
 
 .createAccountLink,
 .forgotPasswordLink {
   margin-left: 0.5rem;
+  padding-bottom: 0;
 }
 
 .forgotPasswordLink:before,
@@ -215,4 +206,9 @@ body {
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+.submitButtonWrapper {
+  text-align: center;
+  padding: 2.5rem;
 }
