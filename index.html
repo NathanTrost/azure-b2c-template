@@ -67,7 +67,7 @@
         const button = document.createElement("button");
         Object.assign(button, {
           id,
-          className: "showPasswordButton link input-group-append",
+          className: "showPasswordButton btn btn-link input-group-append",
           type: "button",
           textContent: "Show",
         });
@@ -200,13 +200,16 @@
         const createAccountId = envId("createAccount");
         const azureCreateLink = document.getElementById(createAccountId);
         Object.assign(azureCreateLink, {
-          className: "createAccountLink link",
+          className: "createAccountLink btn btn-link",
           textContent: "Create",
         });
 
         const forgotPasswordId = envId("forgotPassword");
         const azureForgotPassword = document.getElementById(forgotPasswordId);
-        azureForgotPassword.setAttribute("class", "forgotPasswordLink link");
+        azureForgotPassword.setAttribute(
+          "class",
+          "forgotPasswordLink btn btn-link"
+        );
 
         // Remove "or" divider, we could also just hide this.
         const azureDivider = document.querySelector(".divider");
