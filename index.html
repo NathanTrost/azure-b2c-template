@@ -119,6 +119,8 @@
       };
 
       const shapeEntryItems = () => {
+        const azureFormWrapper = document.querySelector(".entry");
+        azureFormWrapper.classList.add("formWrapper", "shadow");
         // Add unique id and custom classes to 'entry-item'
         const azureWrappers = document.querySelectorAll(".entry-item");
         azureWrappers.forEach((wrapper) => {
@@ -184,11 +186,17 @@
 
       const shapeNonInputElements = () => {
         const azureSignInMessage = document.querySelector(".intro h2");
-        Object.assign(azureSignInMessage, {
+        const newSignInMessage = document.createElement("h1");
+        Object.assign(newSignInMessage, {
           id: "signInMessage",
           className: "signInMessage",
           textContent: "Sign in to your account",
         });
+
+        azureSignInMessage.parentNode.replaceChild(
+          newSignInMessage,
+          azureSignInMessage
+        );
 
         // Copy "create account" node and move it below "Sign in" text
         const azureCreate = document.querySelector(".create");
@@ -222,8 +230,6 @@
           className: "btn btn-primary",
           disabled: true,
         });
-
-        console.log("shaping?", submitButton);
       };
 
       // Copied from https://gist.github.com/jwilson8767/db379026efcbd932f64382db4b02853e

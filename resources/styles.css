@@ -1,15 +1,94 @@
-/* Bootstrap overrides */
+/* Bootstrap overrides copied from TPS styles */
+
+html,
+:root {
+  font-size: 62.5%;
+  /* Placeholder for new font */
+  --font-family: Avenir Next, sans-serif;
+  /* Colors */
+  --dark-gold: #c87a15;
+  --ps-gold: #ffb730;
+  --light-gold: #ffe899;
+  --dark-blue: #00233d;
+  --ps-blue: #05354e;
+  --medium-blue: #1e4c62;
+  --light-blue: #377fa5;
+  --cadet-blue: #5f9ea7;
+  --powder-blue: #b2dee3;
+  --light-sky-blue: #8dd7fd;
+  --dodger-blue: #1eb1fc;
+  --light-red: #fce5e3;
+  --light-yellow: #fff6db;
+  --light-green: #e2f3e4;
+  --light-dodger: #dff4ff;
+  --dark-red: #980d1d;
+  --dark-yellow: #ac6100;
+  --dark-green: #006a0c;
+  --white: #fff;
+  --gray-100: #eeeeee;
+  --gray-200: #dddddd;
+  --gray-300: #bbbbbb;
+  --gray-400: #888888;
+  --gray-500: #777777;
+  --gray-600: #454545;
+  --gray-700: #242424;
+  --black: #000;
+}
+
+body {
+  background-color: var(--white);
+  font-family: var(--font-family);
+  font-size: 1.5rem;
+}
+.btn {
+  font-size: 1.5rem;
+  border-radius: 1rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: var(--dodger-blue);
+  border: 1px solid transparent;
+  text-transform: uppercase;
+  vertical-align: middle;
+  user-select: none;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 4.5rem;
+  height: 5.5rem;
+  font-size: 1.5rem;
+  line-height: 2;
+}
+.btn-primary:hover {
+  background-color: var(--light-sky-blue);
+  border: 1px solid transparent;
+}
+
+.btn-primary:disabled {
+  background-color: var(--light-dodger);
+  border: 1px solid transparent;
+}
+
 .btn-link {
-  color: #24b1fb;
-  font-weight: 500;
+  color: var(--dodger-blue);
+  font-weight: 700;
   text-decoration: none;
   touch-action: manipulation;
   user-select: none;
+  vertical-align: baseline;
+}
+
+.btn-link:hover {
+  color: var(--dodger-blue);
 }
 
 .input-group {
   border-radius: 0.5rem;
-  border: 1px solid #777;
+  border: 1px solid var(--gray-500);
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   width: 100%;
   outline: 0;
@@ -21,6 +100,7 @@
   outline: 0;
   background-color: transparent;
   border: none;
+  font-size: 1.8rem;
 }
 
 /* Custom CSS */
@@ -30,7 +110,7 @@ html {
 body {
   font-family: Segoe UI, SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-attachment: fixed;
-  background-color: #fff;
+  background-color: var(--white);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -46,14 +126,23 @@ body {
   width: 400px;
 }
 
+.signInMessage {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+}
+
+.formWrapper {
+  padding: 2.5rem;
+}
+
 .labelWrapper {
   text-align: left;
-  color: #777;
-  margin: 0.5rem 0 0.25rem;
+  margin: 3.5rem 0 0.75rem;
 }
 
 .labelWrapper label {
-  font-weight: 600;
+  color: var(--black);
+  font-weight: 700;
 }
 
 .liveValidationBlock {
@@ -63,7 +152,7 @@ body {
 }
 
 .inputWrapper__invalid .input-group {
-  border-color: red;
+  border-color: var(--dark-red);
 }
 .inputWrapper__invalid .liveValidationBlock {
   display: block;
@@ -87,14 +176,14 @@ body {
 .forgotPasswordLink:before,
 .createAccountLink:before {
   content: "(";
-  color: black;
+  color: var(--black);
   padding-right: 2px;
 }
 
 .forgotPasswordLink:after,
 .createAccountLink:after {
   content: ")";
-  color: black;
+  color: var(--black);
   padding-left: 2px;
 }
 
@@ -107,4 +196,14 @@ body {
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+#api,
+#api-dev {
+  flex-grow: 1;
+}
+
+.buttons {
+  text-align: center;
+  padding: 2.5rem;
 }
