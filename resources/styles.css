@@ -118,6 +118,10 @@ body {
   font-size: 1.8rem;
 }
 
+input-group .form-control::placeholder {
+  color: var(--white);
+}
+
 /* Custom CSS */
 
 .container {
