@@ -162,6 +162,7 @@ body {
 .inputWrapper__invalid .input-group {
   border-color: var(--dark-red);
 }
+
 .inputWrapper__invalid .liveValidationBlock {
   display: block;
 }
