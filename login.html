@@ -8,26 +8,59 @@
     <link rel="stylesheet" href="https://use.typekit.net/hjz6hxl.css" />
     <!-- Currently pulling in bootstrap directly and modifying the styles we need.
     Ideally it'd be nice to directly link our stylesheet hosted with the new TPS. -->
+
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
     />
-
-    <link id="local-stylesheet" rel="stylesheet" href="styles.css" />
-
     <script>
-      // Cd from root in to azure/login and then use serve to view locally
-      const localBuildUrl = "http://localhost:5000/";
-      // Local gh page.  This is currently being hosted via personal gh page.
-      // We will likely end up hosting this in azure soon.
-      const ghPagesUrl = "https://nathantrost.github.io/azure-b2c-template/";
+      const envUrls = {
+        // Cd from root in to azure and then use serve to view locally.
+        // This file would be found at localhost:5000/login.
+        local: "http://localhost:5000/",
+        // You can find these files in the general AMU Azure directory in the
+        // puzzlesocietylogin Storage account.
+        azureTemplate: "https://puzzlesocietylogin.z13.web.core.windows.net/",
+        azureLogin: "https://amub2c.b2clogin.com",
+      };
 
-      const isLiveAzure = !(
-        window.location.href.startsWith(localBuildUrl) ||
-        window.location.href.startsWith(ghPagesUrl)
-      );
+      const isLiveAzure = window.location.href.startsWith(envUrls.azureLogin);
+      const baseUrl = isLiveAzure ? envUrls.azureTemplate : envUrls.local;
 
       const envId = (name) => (isLiveAzure ? name : `${name}-dev`);
+
+      // Show mock form if developing locally or outside of azure.
+      // This is a copy from basic azure form, with all id's appended with '-dev'
+      // We instantly remove 'api-dev' node if we're not in development environment
+      // otherwise remove the 'api' node
+      const handleDevMockContent = () =>
+        document.getElementById(isLiveAzure ? "api-dev" : "api").remove();
+
+      const loadStylesheet = () => {
+        const stylesheet = document.createElement("link");
+
+        Object.assign(stylesheet, {
+          id: "local-stylesheet",
+          href: baseUrl + "styles.css",
+          rel: "stylesheet",
+          type: "text/css",
+        });
+        document.getElementsByTagName("head")[0].appendChild(stylesheet);
+      };
+
+      // Unable to use relative paths in azure, should we want to centrallize js,
+      // we could use something along these lines to do it.
+      // const scriptAssets = ['utils.js'];
+      // const loadScriptAssets = () => {
+      //   scriptAssets.forEach((asset) => {
+      //     const scriptTag = document.createElement('script');
+      //     const base = isLiveAzure ? baseUrl.azure : baseUrl.local;
+      //     document.src = baseUrl + asset;
+      //     document.getElementsByTagName('head')[0].appendChild(scriptTag);
+      //   });
+      // };
+    </script>
+    <script>
       const submitButtonId = envId("next");
 
       let inputValidation = {};
@@ -37,32 +70,13 @@
       // At least 1 number
       // At least 1 uppercase and 1 lowercase letter
       const passwordCriteriaRegex =
-        "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}$";
+        "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_=+-]).{8,30}$";
 
       const liveValidationErrorDefinitions = {
         email:
           "<strong>Try again</strong>. Please enter a valid email address that includes an @ sign and a domain, like abc@mail.com.",
         password:
           "Your password must be at least eight characters long, and contain at least one special character, one number, one lowercase letter, and one uppercase letter.",
-      };
-
-      // Show mock form if in local or gh-pages environments,
-      // This is a copy from basic azure form, with all id's appended with '-dev'
-      // We instantly remove this node if we're not in development environment
-      const handleDevMockContent = () => {
-        const apiDevForm = document.getElementById("api-dev");
-        if (isLiveAzure) {
-          // direct stylesheet to ghpages
-          const localStylesheet = document.getElementById("local-stylesheet");
-          localStylesheet.setAttribute(
-            "href",
-            `${ghPagesUrl}/${localStylesheet.getAttribute("href")}`
-          );
-          // Remove test data
-          return apiDevForm.remove();
-        } else {
-          return (apiDevForm.style.opacity = 1);
-        }
       };
 
       const buildToggleButton = (passwordInput) => {
@@ -96,12 +110,21 @@
       const validateField = (event) => {
         const { id, pattern, value } = event.target;
         const isValid = new RegExp(pattern).test(value);
-        const fieldWrapper = document.getElementById(`inputWrapper-${id}`);
+        const fieldWrapper = document.getElementById(`${id}-inputWrapper`);
 
-        if (value.length && !isValid) {
-          fieldWrapper.classList.add("inputWrapper__invalid");
+        const validClass = "inputWrapper--valid";
+        const invalidClass = "inputWrapper--invalid";
+
+        if (value.length) {
+          if (!isValid) {
+            fieldWrapper.classList.remove(validClass);
+            fieldWrapper.classList.add(invalidClass);
+          } else {
+            fieldWrapper.classList.remove(invalidClass);
+            fieldWrapper.classList.add(validClass);
+          }
         } else {
-          fieldWrapper.classList.remove("inputWrapper__invalid");
+          fieldWrapper.classList.remove(invalidClass, validClass);
         }
         inputValidation[id] = isValid;
         submitButtonValidation();
@@ -117,32 +140,38 @@
         });
       };
 
-      const wrap = (el, wrapper) => {
-        el.parentNode.insertBefore(wrapper, el);
-        wrapper.appendChild(el);
-      };
-
-      const shapeEntryItems = () => {
-        const azureFormWrapper = document.querySelector(".entry");
+      const shapeEntryItems = ({ formWrapperNode, inputWrapperNode }) => {
+        const azureFormWrapper = document.querySelector(formWrapperNode);
+        azureFormWrapper.setAttribute("id", "formWrapper");
         azureFormWrapper.classList.add("formWrapper", "shadow-lg");
+
         // Add unique id and custom classes to 'entry-item'
-        const azureWrappers = document.querySelectorAll(".entry-item");
+        const azureWrappers = document.querySelectorAll(inputWrapperNode);
         azureWrappers.forEach((wrapper) => {
-          const { id } = wrapper.querySelector("input");
-          wrapper.setAttribute("id", `inputWrapper-${id}`);
-          wrapper.classList.add("inputWrapper", `inputWrapper__${id}`);
+          const input = wrapper.querySelector("input");
+          if (input) {
+            const { id } = input;
+            wrapper.setAttribute("id", `${id}-inputWrapper`);
+            wrapper.classList.add("inputWrapper", `inputWrapper--${id}`);
+          }
         });
       };
 
-      const shapeFormLabels = () => {
+      const shapeFormLabels = ({ inputWrapperNode }) => {
         // Wrap labels & make them uniform
-        const azureLabels = document.querySelectorAll(".entry-item label");
+        const azureLabels = document.querySelectorAll(
+          `${inputWrapperNode} label`
+        );
         azureLabels.forEach((label) => {
-          if (label.parentElement.classList.contains("entry-item")) {
+          if (
+            label.parentElement.classList.contains(
+              inputWrapperNode.replace(".", "")
+            )
+          ) {
             labelWrapper = document.createElement("div");
             Object.assign(labelWrapper, {
-              id: `${label.htmlFor}-label-wrapper`,
-              className: `labelWrapper__${label.htmlFor} labelWrapper`,
+              id: `${label.htmlfor}-labelWrapper`,
+              className: `labelWrapper labelWrapper--${label.htmlFor}`,
             });
             wrap(label, labelWrapper);
           } else {
@@ -151,9 +180,10 @@
         });
       };
 
-      const shapeInputs = () => {
+      const shapeInputs = ({ inputNode }) => {
         // Wrap inputs and use BS 'input-group' & 'form-control' classes
-        const azureInputs = document.querySelectorAll(".entry-item input");
+        const azureInputs = document.querySelectorAll(inputNode);
+        console.log(azureInputs);
         azureInputs.forEach((input) => {
           const inputGroup = document.createElement("div");
 
@@ -169,8 +199,8 @@
             pattern,
           });
           Object.assign(inputGroup, {
-            id: `inputGroup-${input.id}`,
-            className: `inputGroup__${input.id} input-group`,
+            id: `${input.id}-inputGroup`,
+            className: `inputGroup--${input.id} input-group`,
           });
           const errorBlock = document.createElement("div");
           Object.assign(errorBlock, {
@@ -212,7 +242,8 @@
         const createAccountId = envId("createAccount");
         const azureCreateLink = document.getElementById(createAccountId);
         Object.assign(azureCreateLink, {
-          className: "createAccountLink btn btn-link",
+          className:
+            "btn btn-link buttonLink--wrappedParens buttonLink--createAccount",
           textContent: "Create",
         });
 
@@ -220,7 +251,7 @@
         const azureForgotPassword = document.getElementById(forgotPasswordId);
         azureForgotPassword.setAttribute(
           "class",
-          "forgotPasswordLink btn btn-link"
+          "btn btn-link buttonLink--wrappedParens buttonLink--forgotPassword"
         );
 
         // Remove "or" divider, we could also just hide this.
@@ -261,17 +292,30 @@
         });
       };
 
+      const wrap = (el, wrapper) => {
+        el.parentNode.insertBefore(wrapper, el);
+        wrapper.appendChild(el);
+      };
+
       setTimeout(() => {
+        const apiId = `#${envId("api")}`;
         handleDevMockContent();
-        elementReady("#api").then(() => {
-          shapeEntryItems();
-          shapeFormLabels();
-          shapeInputs();
+        loadStylesheet();
+        // loadScriptAssets();
+        elementReady(apiId).then(() => {
+          shapeEntryItems({
+            formWrapperNode: ".entry",
+            inputWrapperNode: ".entry-item",
+          });
+
+          shapeFormLabels({ inputWrapperNode: ".entry-item" });
+
+          shapeInputs({ inputNode: ".entry-item input" });
           shapeSubmitButton();
           shapeNonInputElements();
           createPasswordToggleButtons();
           // Make smooth CSS transition for api form elements
-          const azureForm = document.getElementById("api");
+          const azureForm = document.getElementById(envId("api"));
           azureForm.style.opacity = 1;
         });
       }, 500);
@@ -280,14 +324,14 @@
 
   <body>
     <div class="container">
-      <!-- 'api-dev' is a copy of the markup provided by azure.  
+      <div id="api-dev" style="opacity: 0">
+        <!-- 'api-dev' is a copy of the markup provided by azure.  
         The point of including this here is to aid in local development.
         If this is viewed locally ('http://localhost:5000/') via 'serve', or
         in github pages (currently 'https://nathantrost.github.io/azure-b2c-template/')
         'api-dev' will be visible as a non-functional form.  Otherwise, 'api-dev'
         will be removed.
        -->
-      <div id="api-dev" style="opacity: 0">
         <form
           id="localAccountForm-dev"
           action="JavaScript:void(0);"
@@ -353,7 +397,6 @@
                 aria-label="Password"
                 autocomplete="current-password"
                 aria-required="true"
-                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,30}$"
               />
             </div>
             <div class="working"></div>

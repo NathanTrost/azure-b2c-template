@@ -18,7 +18,8 @@ html,
   --light-sky-blue: #8dd7fd;
   --dodger-blue: #1eb1fc;
   --light-dodger: #dff4ff;
-  --dark-red: #980d1d;
+  --green: #37a744;
+  --red: #e74c3c;
   --white: #fff;
   --gray-100: #eeeeee;
   --gray-200: #dddddd;
@@ -47,8 +48,7 @@ body {
   flex-grow: 1;
 }
 
-#localAccountForm,
-#localAccountForm-dev {
+form {
   background-color: var(--white);
   border-radius: 1rem;
   padding: 3rem;
@@ -143,6 +143,11 @@ input-group .form-control::placeholder {
   font-size: 1.2rem;
 }
 
+.error .pageLevel {
+  /* Error message we get back from azure */
+  color: var(--red);
+}
+
 .formWrapper {
   padding: 2.5rem;
 }
@@ -163,12 +168,24 @@ input-group .form-control::placeholder {
   font-size: 1.2rem;
 }
 
-.inputWrapper__invalid .input-group {
-  border-color: var(--dark-red);
+.inputWrapper--invalid .labelWrapper label {
+  color: var(--red);
 }
 
-.inputWrapper__invalid .liveValidationBlock {
+.inputWrapper--invalid .input-group {
+  border-color: var(--red);
+}
+
+.inputWrapper--invalid .liveValidationBlock {
   display: block;
+}
+
+.inputWrapper--valid .labelWrapper label {
+  color: var(--green);
+}
+
+.inputWrapper--valid .input-group {
+  border-color: var(--green);
 }
 
 .showPasswordButton {
@@ -177,26 +194,19 @@ input-group .form-control::placeholder {
   text-transform: uppercase;
 }
 
-.createAccountLink,
-.forgotPasswordLink {
+.buttonLink--wrappedParens {
   animation: 0.5s ease-out 0s 1 slideInFromRight;
-}
-
-.createAccountLink,
-.forgotPasswordLink {
   margin-left: 0.5rem;
   padding-bottom: 0;
 }
 
-.forgotPasswordLink:before,
-.createAccountLink:before {
+.buttonLink--wrappedParens:before {
   content: "(";
   color: var(--black);
   padding-right: 2px;
 }
 
-.forgotPasswordLink:after,
-.createAccountLink:after {
+.buttonLink--wrappedParens:after {
   content: ")";
   color: var(--black);
   padding-left: 2px;
@@ -216,4 +226,11 @@ input-group .form-control::placeholder {
 .submitButtonWrapper {
   text-align: center;
   padding: 2.5rem;
+}
+
+/* Create account */
+
+.formWrapper ul {
+  list-style: none;
+  padding: 0;
 }
